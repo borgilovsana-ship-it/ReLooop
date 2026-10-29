@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17212b">
+  <meta name="description" content="ReLooop — твои сообщения, твой круг.">
+  <title>ReLooop — мессенджер</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" id="topbar">
+      <div class="brand-mark" aria-hidden="true">R</div>
+      <div class="brand-copy"><h1>ReLooop</h1><p>Твои сообщения. Твой круг.</p></div>
+      <button class="icon-button" id="new-chat" aria-label="Создать чат" title="Создать чат">✎</button>
+    </header>
+
+    <main>
+      <section class="screen active" id="chats-screen" aria-label="Чаты">
+        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Поиск чатов" autocomplete="off"></label>
+        <div class="section-heading">СООБЩЕНИЯ</div>
+        <div id="chat-list" class="chat-list"></div>
+      </section>
+
+      <section class="screen" id="contacts-screen" aria-label="Контакты">
+        <div class="page-content"><h2>Контакты</h2><div class="empty-card"><div class="empty-icon">♧</div><h3>Твой круг общения</h3><p>Когда подключим аккаунты и сервер, здесь можно будет находить других пользователей ReLooop.</p><button class="primary-button" id="find-contact">Создать тестовый чат</button></div></div>
+      </section>
+
+      <section class="screen" id="settings-screen" aria-label="Настройки">
+        <div class="page-content"><h2>Настройки</h2>
+          <div class="settings-card"><div class="profile-avatar">R</div><h3>Твой профиль</h3><label for="display-name">Отображаемое имя</label><input id="display-name" class="text-field" maxlength="40" placeholder="Например, Алекс"><button class="primary-button" id="save-name">Сохранить имя</button></div>
+          <div class="settings-card"><h3>Статус проекта</h3><p class="muted">Сейчас работает локальная демо-версия. Интернет-переписка появится после подключения Supabase Auth, базы данных и Realtime.</p><span class="status-pill"><span></span> Сервер ещё не подключён</span></div>
+        </div>
+      </section>
+
+      <section class="conversation" id="conversation" aria-label="Переписка">
+        <header class="conversation-header"><button class="icon-button back-button" id="back-to-chats" aria-label="Назад к чатам">‹</button><div class="avatar" id="conversation-avatar">R</div><div class="conversation-person"><strong id="conversation-name">ReLooop</strong><span id="conversation-status">Демо-чат</span></div></header>
+        <div class="demo-notice" id="demo-notice">Демо-режим: сообщения пока хранятся только на этом устройстве.</div>
+        <div class="messages" id="messages" aria-live="polite"></div>
+        <form class="composer" id="message-form"><input id="message-input" maxlength="4000" placeholder="Сообщение..." autocomplete="off" aria-label="Текст сообщения"><button class="send-button" type="submit" aria-label="Отправить сообщение">➤</button></form>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Основная навигация">
+      <button class="nav-button active" data-screen="chats-screen"><span>▤</span>Чаты</button>
+      <button class="nav-button" data-screen="contacts-screen"><span>♧</span>Контакты</button>
+      <button class="nav-button" data-screen="settings-screen"><span>⚙</span>Настройки</button>
+    </nav>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
