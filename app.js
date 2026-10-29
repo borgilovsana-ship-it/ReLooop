@@ -71,8 +71,7 @@ async function handleAuth(event){
       if(error) throw error;
       if(data.session){
         currentUser=data.user;
-        await ensureProfile(username);
-        showAuthenticatedApp();
+        setAuthMessage("Аккаунт создан, открываем ReLooop…");
       }else{
         setAuthMessage("Аккаунт создан. Проверь почту и подтверди адрес, затем войди здесь.");
       }
@@ -80,8 +79,7 @@ async function handleAuth(event){
       const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
       if(error) throw error;
       currentUser=data.user;
-      await ensureProfile();
-      showAuthenticatedApp();
+      setAuthMessage("Вход выполнен, открываем ReLooop…");
     }
   }catch(error){
     setAuthMessage(authErrorMessage(error),true);
@@ -223,13 +221,5 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
     currentUser=session.user;
     // Avoid making Supabase calls directly inside the auth callback.
     setTimeout(async()=>{try{await ensureProfile();showAuthenticatedApp();}catch(error){$("auth-screen").hidden=false;$("app-content").hidden=true;setAuthMessage(authErrorMessage(error),true);}},0);
-  }
-});
-supabaseClient.auth.getSession().then(async({data,error})=>{
-  if(error){setAuthMessage("Не удалось проверить вход: "+authErrorMessage(error),true);return;}
-  if(data.session?.user){
-    currentUser=data.session.user;
-    try{await ensureProfile();showAuthenticatedApp();}
-    catch(err){setAuthMessage("Аккаунт найден, но профиль не загрузился: "+authErrorMessage(err),true);}
   }
 });
