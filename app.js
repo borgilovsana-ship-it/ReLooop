@@ -66,7 +66,10 @@ async function handleAuth(event){
     if(authMode==="signup"){
       const {data,error}=await supabaseClient.auth.signUp({
         email,password,
-        options:{data:{username,display_name:username}}
+        options:{
+          data:{username,display_name:username},
+          emailRedirectTo:"https://borgilovsana-ship-it.github.io/ReLooop/"
+        }
       });
       if(error) throw error;
       if(data.session){
