@@ -27,3 +27,15 @@ button:focus-visible,input:focus-visible{outline:2px solid #70b7ff;outline-offse
 .empty-state{text-align:center;padding:45px 20px;color:var(--muted);font-size:14px}
 @media(min-width:621px){body{background:#0e171f}.app-shell{box-shadow:0 0 30px #0004}}
 @media(prefers-reduced-motion:no-preference){button{transition:background .12s ease}}
+
+/* Account access */
+[hidden]{display:none!important}
+.auth-screen{min-height:100dvh;padding:28px 18px 36px;display:flex;flex-direction:column;justify-content:center;max-width:430px;margin:0 auto}
+.auth-brand{text-align:center;margin:10px 0 24px}.auth-brand .brand-mark{margin:0 auto 12px;width:58px;height:58px;font-size:32px}.auth-brand h1{margin:0;font-size:29px}.auth-brand p{margin:5px 0;color:var(--muted);font-size:13px}
+.auth-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+.auth-tabs{display:flex;gap:6px;background:var(--panel-2);padding:4px;border-radius:12px;margin-bottom:18px}
+.auth-tab{flex:1;padding:10px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-weight:650}.auth-tab.active{background:var(--blue);color:#fff}
+.auth-card label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}.auth-card .text-field{margin-bottom:8px}
+.auth-submit{width:100%;margin-top:10px}.auth-submit:disabled{opacity:.65;cursor:wait}
+.auth-message{min-height:20px;font-size:13px;line-height:1.5;color:#a8e3c2;overflow-wrap:anywhere}.auth-message.error{color:#ffaaa8}
+.auth-footnote{font-size:11px;line-height:1.5;color:var(--muted);margin:12px 0 0}
