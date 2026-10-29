@@ -1,4 +1,11 @@
 const $ = (id) => document.getElementById(id);
+
+// Public client configuration. Publishable/anon keys are designed for browser use;
+// never put a service_role or secret key in frontend code.
+const SUPABASE_URL = "https://vhnwoatkwzmgfcusiiga.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_a2FiQH6N-IBgadyNL04CCA_HDxWqW_E";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
 const starterChats = [
   {id:"welcome",name:"ReLooop",avatar:"R",color:"#318bd1",preview:"Добро пожаловать в ReLooop!",messages:[
     {text:"Привет! 👋",mine:false,time:"12:00"},
@@ -11,6 +18,9 @@ const starterChats = [
 let chats = starterChats.map(chat=>({...chat,messages:chat.messages.map(message=>({...message}))}));
 let currentChatId = null;
 let currentScreen = "chats-screen";
+let authMode = "login";
+let currentUser = null;
+let currentProfile = null;
 
 try {
   const saved = JSON.parse(localStorage.getItem("relooop-demo-v1") || "null");
@@ -28,6 +38,99 @@ function escapeHTML(value){
   return String(value ?? "").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
 function validColor(color){return /^#[0-9a-f]{6}$/i.test(color || "") ? color : "#477da8";}
+function setAuthMessage(message, isError=false){
+  const el=$("auth-message");el.textContent=message;el.classList.toggle("error",isError);
+}
+function setAuthMode(mode){
+  authMode=mode;
+  const signup=mode==="signup";
+  $("show-login").classList.toggle("active",!signup);
+  $("show-signup").classList.toggle("active",signup);
+  $("username-label").hidden=!signup;$("auth-username").hidden=!signup;
+  $("auth-username").required=signup;
+  $("auth-password").autocomplete=signup?"new-password":"current-password";
+  $("auth-submit").textContent=signup?"Создать аккаунт":"Войти";
+  setAuthMessage("");
+}
+async function handleAuth(event){
+  event.preventDefault();
+  const email=$("auth-email").value.trim().toLowerCase();
+  const password=$("auth-password").value;
+  const username=$("auth-username").value.trim().toLowerCase();
+  if(authMode==="signup"&&!/^[a-z0-9_]{3,24}$/.test(username)){
+    setAuthMessage("Логин: 3–24 символа, только латинские буквы, цифры и _. ",true);return;
+  }
+  $("auth-submit").disabled=true;$("auth-submit").textContent="Подождите…";
+  setAuthMessage("");
+  try{
+    if(authMode==="signup"){
+      const {data,error}=await supabaseClient.auth.signUp({
+        email,password,
+        options:{data:{username,display_name:username}}
+      });
+      if(error) throw error;
+      if(data.session){
+        currentUser=data.user;
+        await ensureProfile(username);
+        showAuthenticatedApp();
+      }else{
+        setAuthMessage("Аккаунт создан. Проверь почту и подтверди адрес, затем войди здесь.");
+      }
+    }else{
+      const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+      if(error) throw error;
+      currentUser=data.user;
+      await ensureProfile();
+      showAuthenticatedApp();
+    }
+  }catch(error){
+    setAuthMessage(authErrorMessage(error),true);
+  }finally{
+    $("auth-submit").disabled=false;$("auth-submit").textContent=authMode==="signup"?"Создать аккаунт":"Войти";
+  }
+}
+function authErrorMessage(error){
+  const msg=String(error?.message||"");
+  if(/Invalid login credentials/i.test(msg)) return "Не удалось войти. Проверь почту и пароль.";
+  if(/already registered/i.test(msg)) return "Этот адрес уже зарегистрирован. Попробуй войти.";
+  if(/password/i.test(msg)&&/short|least|length/i.test(msg)) return "Пароль должен содержать не менее 8 символов.";
+  if(/fetch|network/i.test(msg)) return "Нет соединения с сервером. Проверь интернет и попробуй снова.";
+  if(/username|duplicate key|profiles_username_key/i.test(msg)) return "Этот логин уже занят. Выбери другой.";
+  return msg || "Не получилось выполнить действие. Попробуй ещё раз.";
+}
+async function ensureProfile(preferredUsername=""){
+  if(!currentUser) return;
+  const {data:existing,error:selectError}=await supabaseClient.from("profiles").select("id,username,display_name").eq("id",currentUser.id).maybeSingle();
+  if(selectError) throw selectError;
+  if(existing){currentProfile=existing;return;}
+  const metadata=currentUser.user_metadata||{};
+  const base=(preferredUsername||metadata.username||currentUser.email?.split("@")[0]||"user")
+    .toLowerCase().replace(/[^a-z0-9_]/g,"").slice(0,20) || "user";
+  let username=base;
+  for(let i=0;i<4;i++){
+    const {data,error}=await supabaseClient.from("profiles").insert({
+      id:currentUser.id,username,display_name:String(metadata.display_name||username).slice(0,40)
+    }).select("id,username,display_name").single();
+    if(!error){currentProfile=data;return;}
+    if(error.code==="23505"){username=(base.slice(0,17)+"_"+Math.random().toString(36).slice(2,6)).slice(0,24);continue;}
+    throw error;
+  }
+  throw new Error("Не удалось создать профиль. Попробуй войти ещё раз.");
+}
+function showAuthenticatedApp(){
+  $("auth-screen").hidden=true;$("app-content").hidden=false;
+  $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
+  $("account-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
+  if(currentProfile?.display_name) $("display-name").value=currentProfile.display_name;
+  renderChats();
+}
+async function handleSignOut(){
+  const {error}=await supabaseClient.auth.signOut();
+  if(error){alert("Не удалось выйти: "+authErrorMessage(error));return;}
+  currentUser=null;currentProfile=null;
+  $("app-content").hidden=true;$("auth-screen").hidden=false;
+  $("auth-password").value="";setAuthMode("login");
+}
 function renderChats(){
   const query=$("search").value.trim().toLocaleLowerCase("ru");
   const list=$("chat-list");list.replaceChildren();
@@ -59,8 +162,7 @@ function openChat(id){
   $("conversation").classList.add("active");
   $("conversation-name").textContent=chat.name;$("conversation-avatar").textContent=chat.avatar;
   $("conversation-avatar").style.background=validColor(chat.color);
-  renderMessages();
-  $("message-input").focus();
+  renderMessages();$("message-input").focus();
 }
 function closeConversation(){
   $("conversation").classList.remove("active");
@@ -87,19 +189,26 @@ function sendMessage(event){
   input.value="";persistDemo();renderMessages();renderChats();
 }
 function createChat(){
-  const answer=prompt("Как назвать новый чат?");
+  const answer=prompt("Как назвать новый демо-чат?");
   if(!answer||!answer.trim())return;
   const name=answer.trim().slice(0,40);
   const chat={id:"local-"+Date.now(),name,avatar:Array.from(name)[0].toUpperCase(),color:"#477da8",preview:"Новый демо-чат",messages:[]};
   chats.unshift(chat);persistDemo();$("search").value="";showScreen("chats-screen");renderChats();openChat(chat.id);
 }
-function saveDisplayName(){
-  $("display-name").value=$("display-name").value.trim().slice(0,40);
-  persistDemo();
+async function saveDisplayName(){
+  const displayName=$("display-name").value.trim().slice(0,40);
+  if(!displayName){alert("Введи имя.");return;}
+  const {data,error}=await supabaseClient.from("profiles").update({display_name:displayName}).eq("id",currentUser.id).select("id,username,display_name").single();
+  if(error){alert("Не удалось сохранить имя: "+authErrorMessage(error));return;}
+  currentProfile=data;persistDemo();
   const button=$("save-name");const oldText=button.textContent;button.textContent="Сохранено ✓";
   window.setTimeout(()=>{button.textContent=oldText;},1500);
 }
 
+$("show-login").addEventListener("click",()=>setAuthMode("login"));
+$("show-signup").addEventListener("click",()=>setAuthMode("signup"));
+$("auth-form").addEventListener("submit",handleAuth);
+$("sign-out").addEventListener("click",handleSignOut);
 document.querySelectorAll(".nav-button").forEach(button=>button.addEventListener("click",()=>showScreen(button.dataset.screen)));
 $("search").addEventListener("input",renderChats);
 $("message-form").addEventListener("submit",sendMessage);
@@ -107,4 +216,20 @@ $("new-chat").addEventListener("click",createChat);
 $("find-contact").addEventListener("click",createChat);
 $("back-to-chats").addEventListener("click",backToChats);
 $("save-name").addEventListener("click",saveDisplayName);
-renderChats();
+setAuthMode("login");
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+  if(event==="SIGNED_OUT"){currentUser=null;currentProfile=null;$("app-content").hidden=true;$("auth-screen").hidden=false;return;}
+  if(session?.user){
+    currentUser=session.user;
+    // Avoid making Supabase calls directly inside the auth callback.
+    setTimeout(async()=>{try{await ensureProfile();showAuthenticatedApp();}catch(error){$("auth-screen").hidden=false;$("app-content").hidden=true;setAuthMessage(authErrorMessage(error),true);}},0);
+  }
+});
+supabaseClient.auth.getSession().then(async({data,error})=>{
+  if(error){setAuthMessage("Не удалось проверить вход: "+authErrorMessage(error),true);return;}
+  if(data.session?.user){
+    currentUser=data.session.user;
+    try{await ensureProfile();showAuthenticatedApp();}
+    catch(err){setAuthMessage("Аккаунт найден, но профиль не загрузился: "+authErrorMessage(err),true);}
+  }
+});
