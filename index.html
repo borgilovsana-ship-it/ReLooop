@@ -7,9 +7,28 @@
   <meta name="description" content="ReLooop — твои сообщения, твой круг.">
   <title>ReLooop — мессенджер</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <div class="app-shell">
+    <section class="auth-screen" id="auth-screen" aria-label="Вход в ReLooop">
+      <div class="auth-brand"><div class="brand-mark">R</div><h1>ReLooop</h1><p>Твои сообщения. Твой круг.</p></div>
+      <div class="auth-card">
+        <div class="auth-tabs"><button type="button" id="show-login" class="auth-tab active">Вход</button><button type="button" id="show-signup" class="auth-tab">Регистрация</button></div>
+        <form id="auth-form">
+          <label id="username-label" for="auth-username" hidden>Логин</label>
+          <input id="auth-username" class="text-field" type="text" minlength="3" maxlength="24" autocomplete="username" placeholder="Логин (3–24 символа)" hidden>
+          <label for="auth-email">Электронная почта</label>
+          <input id="auth-email" class="text-field" type="email" maxlength="254" autocomplete="email" placeholder="name@example.com" required>
+          <label for="auth-password">Пароль</label>
+          <input id="auth-password" class="text-field" type="password" minlength="8" maxlength="72" autocomplete="current-password" placeholder="Не менее 8 символов" required>
+          <button class="primary-button auth-submit" id="auth-submit" type="submit">Войти</button>
+        </form>
+        <p class="auth-message" id="auth-message" role="status" aria-live="polite"></p>
+        <p class="auth-footnote">Пароль обрабатывает Supabase Auth. Не используй пароль от других аккаунтов.</p>
+      </div>
+    </section>
+    <div id="app-content" hidden>
     <header class="topbar" id="topbar">
       <div class="brand-mark" aria-hidden="true">R</div>
       <div class="brand-copy"><h1>ReLooop</h1><p>Твои сообщения. Твой круг.</p></div>
@@ -30,7 +49,7 @@
       <section class="screen" id="settings-screen" aria-label="Настройки">
         <div class="page-content"><h2>Настройки</h2>
           <div class="settings-card"><div class="profile-avatar">R</div><h3>Твой профиль</h3><label for="display-name">Отображаемое имя</label><input id="display-name" class="text-field" maxlength="40" placeholder="Например, Алекс"><button class="primary-button" id="save-name">Сохранить имя</button></div>
-          <div class="settings-card"><h3>Статус проекта</h3><p class="muted">Сейчас работает локальная демо-версия. Интернет-переписка появится после подключения Supabase Auth, базы данных и Realtime.</p><span class="status-pill"><span></span> Сервер ещё не подключён</span></div>
+          <div class="settings-card"><h3>Аккаунт</h3><p class="muted" id="account-email">Загрузка аккаунта…</p><p class="muted" id="account-username"></p><button class="primary-button" id="sign-out" type="button">Выйти из аккаунта</button><p class="muted">Вход и регистрация подключены. Чаты пока остаются демоверсией; следующим шагом подключим реальные сообщения.</p></div>
         </div>
       </section>
 
@@ -47,6 +66,7 @@
       <button class="nav-button" data-screen="contacts-screen"><span>♧</span>Контакты</button>
       <button class="nav-button" data-screen="settings-screen"><span>⚙</span>Настройки</button>
     </nav>
+    </div>
   </div>
   <script src="app.js"></script>
 </body>
