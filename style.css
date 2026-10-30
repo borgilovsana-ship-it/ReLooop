@@ -189,3 +189,27 @@ body.profile-mode .profile-more{width:34px;height:34px;font-size:24px}
 body.profile-mode .profile-add-button{font-size:15px;padding:8px 19px;bottom:68px;border-width:2px}
 body.profile-mode .profile-tabs{height:50px;padding:4px;gap:3px}
 body.profile-mode .profile-tab{font-size:12px;padding:8px 10px}
+
+/* Make the entire profile layout more compact */
+body.profile-mode .profile-page{padding:0 12px 82px;min-height:calc(100dvh - 58px)}
+body.profile-mode .profile-topline{height:46px;padding:0 6px}
+body.profile-mode .profile-mini-logo{font-size:18px}
+body.profile-mode .profile-hero{padding:8px 0 14px}
+body.profile-mode .profile-photo{width:108px;height:108px;font-size:48px}
+body.profile-mode .profile-hero h2{font-size:23px;margin:15px 0 7px}
+body.profile-mode .profile-online{font-size:12px;gap:6px}
+body.profile-mode .profile-online span{width:13px;height:13px;border-radius:4px}
+body.profile-mode .profile-actions{gap:6px;margin:7px 0 10px}
+body.profile-mode .profile-action{min-height:58px;border-radius:15px;font-size:10px;gap:4px;padding:5px 2px}
+body.profile-mode .profile-action span{font-size:20px}
+body.profile-mode .profile-music{font-size:11px;padding:7px 12px;margin-bottom:16px;border-radius:18px}
+body.profile-mode .profile-details{border-radius:17px;margin-bottom:16px}
+body.profile-mode .profile-detail{padding:11px 15px 9px;gap:4px}
+body.profile-mode .profile-detail strong{font-size:14px}
+body.profile-mode .profile-detail span{font-size:11px}
+body.profile-mode .profile-tabs{height:42px;border-radius:24px;padding:3px;gap:2px}
+body.profile-mode .profile-tab{font-size:10px;padding:7px 8px;border-radius:18px}
+body.profile-mode .profile-empty{padding:34px 8px 14px}
+body.profile-mode .profile-empty h3{font-size:17px;margin-bottom:8px}
+body.profile-mode .profile-empty p{font-size:11px;line-height:1.4}
+body.profile-mode .profile-add-button{font-size:12px;padding:6px 15px;bottom:64px;border-width:2px;border-radius:24px}
