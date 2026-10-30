@@ -36,10 +36,14 @@
     </header>
 
     <main>
-      <section class="screen active" id="chats-screen" aria-label="Чаты">
-        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Поиск чатов" autocomplete="off"></label>
-        <div class="section-heading">СООБЩЕНИЯ</div>
-        <div id="chat-list" class="chat-list"></div>
+      <section class="screen active chats-screen" id="chats-screen" aria-label="Чаты">
+        <div class="chats-page">
+          <header class="chats-heading"><div class="chats-brand-icon">R</div><h2>ReLooop</h2><button type="button" id="chats-more" aria-label="Дополнительно">⋮</button></header>
+          <label class="chats-search"><span>⌕</span><input id="search" type="search" placeholder="Поиск чатов" autocomplete="off"></label>
+          <div class="chat-tabs"><button class="chat-tab active" id="all-chats-tab" type="button">Все чаты <span id="chat-count">0</span></button><button class="chat-tab" id="games-tab" type="button">Игры</button></div>
+          <div id="chat-list" class="chat-list"></div>
+          <button class="chats-fab" id="chats-fab" type="button" aria-label="Новый чат">＋</button>
+        </div>
       </section>
 
       <section class="screen contacts-screen" id="contacts-screen" aria-label="Контакты">
