@@ -126,7 +126,7 @@ function showAuthenticatedApp(){
   $("profile-detail-email").textContent=currentUser?.email||"—";
   $("profile-detail-username").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
   $("display-name").value=currentProfile?.display_name||"";
-  try{const photo=localStorage.getItem("relooop-profile-photo");if(photo)$("profile-avatar").style.backgroundImage="url(\\\""+photo+"\\\")";}catch(error){}
+  try{const photo=localStorage.getItem("relooop-profile-photo");if(photo) $("profile-avatar").style.backgroundImage="url("+photo+")";}catch(error){}
   $("profile-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
   if(currentProfile?.display_name){
     $("display-name").value=currentProfile.display_name;
