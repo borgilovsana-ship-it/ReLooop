@@ -142,6 +142,7 @@ function showAuthenticatedApp(){
     $("profile-heading").textContent=currentProfile.display_name;
     if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(currentProfile.display_name)[0].toUpperCase();
   }
+  document.body.classList.add("chats-mode");
   renderChats();
 }
 async function handleSignOut(){
@@ -155,6 +156,7 @@ function renderChats(){
   const query=$("search").value.trim().toLocaleLowerCase("ru");
   const list=$("chat-list");list.replaceChildren();
   const visible=chats.filter(chat=>chat.name.toLocaleLowerCase("ru").includes(query)||(chat.preview||"").toLocaleLowerCase("ru").includes(query));
+  $("chat-count").textContent=String(chats.length);
   if(!visible.length){const empty=document.createElement("div");empty.className="empty-state";empty.textContent="Чаты не найдены";list.appendChild(empty);return;}
   visible.forEach(chat=>{
     const button=document.createElement("button");button.className="chat-row";button.type="button";
@@ -162,7 +164,7 @@ function renderChats(){
     const info=document.createElement("div");info.className="chat-info";
     const titleLine=document.createElement("div");titleLine.className="chat-title-line";
     const title=document.createElement("span");title.className="chat-name";title.textContent=chat.name;
-    const time=document.createElement("span");time.className="chat-time";time.textContent=chat.messages.length ? (chat.messages[chat.messages.length-1].time||"") : "";
+    const time=document.createElement("span");time.className="chat-time";time.textContent=chat.messages.length?(chat.messages[chat.messages.length-1].time||""):"";
     titleLine.append(title,time);
     const preview=document.createElement("div");preview.className="chat-preview";preview.textContent=chat.preview||"Нет сообщений";
     info.append(titleLine,preview);button.append(avatar,info);button.addEventListener("click",()=>openChat(chat.id));list.appendChild(button);
@@ -173,6 +175,7 @@ function showScreen(screenId){
   document.body.classList.toggle("profile-mode",screenId==="profile-screen");
   document.body.classList.toggle("settings-mode",screenId==="settings-screen");
   document.body.classList.toggle("contacts-mode",screenId==="contacts-screen");
+  document.body.classList.toggle("chats-mode",screenId==="chats-screen");
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===screenId));
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
@@ -241,7 +244,7 @@ document.querySelectorAll(".nav-button").forEach(button=>button.addEventListener
 $("search").addEventListener("input",renderChats);
 $("message-form").addEventListener("submit",sendMessage);
 $("new-chat").addEventListener("click",createChat);
-$("find-contact").addEventListener("click",createChat);
+
 $("back-to-chats").addEventListener("click",backToChats);
 $("save-name").addEventListener("click",saveDisplayName);
 $("choose-photo").addEventListener("click",()=>$("profile-photo-input").click());
@@ -302,3 +305,13 @@ $("invite-friends").addEventListener("click",()=>{
 $("recent-calls").addEventListener("click",()=>alert("История звонков появится, когда в ReLooop появятся звонки."));
 $("contacts-sort").addEventListener("click",()=>alert("Контакты будут сортироваться по имени."));
 $("contacts-add").addEventListener("click",()=>alert("Поиск и добавление пользователей добавим отдельным обновлением."));
+
+$("chats-fab").addEventListener("click",createChat);
+$("chats-more").addEventListener("click",()=>showScreen("settings-screen"));
+$("all-chats-tab").addEventListener("click",()=>{
+  $("all-chats-tab").classList.add("active");$("games-tab").classList.remove("active");renderChats();
+});
+$("games-tab").addEventListener("click",()=>{
+  $("games-tab").classList.add("active");$("all-chats-tab").classList.remove("active");
+  $("chat-list").replaceChildren();const empty=document.createElement("div");empty.className="empty-state";empty.textContent="Игры появятся здесь позже."; $("chat-list").appendChild(empty);
+});
