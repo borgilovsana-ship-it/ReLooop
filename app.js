@@ -122,7 +122,13 @@ function showAuthenticatedApp(){
   $("auth-screen").hidden=true;$("app-content").hidden=false;
   $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
   $("account-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
-  if(currentProfile?.display_name) $("display-name").value=currentProfile.display_name;
+  $("profile-email").textContent=currentUser?.email||"Аккаунт ReLooop";
+  $("profile-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
+  if(currentProfile?.display_name){
+    $("display-name").value=currentProfile.display_name;
+    $("profile-heading").textContent=currentProfile.display_name;
+    $("profile-avatar").textContent=Array.from(currentProfile.display_name)[0].toUpperCase();
+  }
   renderChats();
 }
 async function handleSignOut(){
@@ -202,6 +208,10 @@ async function saveDisplayName(){
   const {data,error}=await supabaseClient.from("profiles").update({display_name:displayName}).eq("id",currentUser.id).select("id,username,display_name").single();
   if(error){alert("Не удалось сохранить имя: "+authErrorMessage(error));return;}
   currentProfile=data;persistDemo();
+  $("profile-heading").textContent=displayName;
+  $("profile-avatar").textContent=Array.from(displayName)[0].toUpperCase();
+  $("account-username").textContent="Логин: @"+data.username;
+  $("profile-username").textContent="Логин: @"+data.username;
   const button=$("save-name");const oldText=button.textContent;button.textContent="Сохранено ✓";
   window.setTimeout(()=>{button.textContent=oldText;},1500);
 }
