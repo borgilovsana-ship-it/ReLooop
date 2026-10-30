@@ -123,6 +123,10 @@ function showAuthenticatedApp(){
   $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
   $("account-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
   $("profile-email").textContent=currentUser?.email||"Аккаунт ReLooop";
+  $("profile-detail-email").textContent=currentUser?.email||"—";
+  $("profile-detail-username").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
+  $("display-name").value=currentProfile?.display_name||"";
+  try{const photo=localStorage.getItem("relooop-profile-photo");if(photo)$("profile-avatar").style.backgroundImage="url(\\\""+photo+"\\\")";}catch(error){}
   $("profile-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
   if(currentProfile?.display_name){
     $("display-name").value=currentProfile.display_name;
@@ -157,6 +161,7 @@ function renderChats(){
 }
 function showScreen(screenId){
   currentScreen=screenId;closeConversation();
+  document.body.classList.toggle("profile-mode",screenId==="profile-screen");
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===screenId));
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
@@ -209,9 +214,11 @@ async function saveDisplayName(){
   if(error){alert("Не удалось сохранить имя: "+authErrorMessage(error));return;}
   currentProfile=data;persistDemo();
   $("profile-heading").textContent=displayName;
-  $("profile-avatar").textContent=Array.from(displayName)[0].toUpperCase();
+  if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(displayName)[0].toUpperCase();
+  $("profile-edit-panel").hidden=true;
   $("account-username").textContent="Логин: @"+data.username;
   $("profile-username").textContent="Логин: @"+data.username;
+  $("profile-detail-username").textContent="@"+data.username;
   const button=$("save-name");const oldText=button.textContent;button.textContent="Сохранено ✓";
   window.setTimeout(()=>{button.textContent=oldText;},1500);
 }
@@ -227,6 +234,33 @@ $("new-chat").addEventListener("click",createChat);
 $("find-contact").addEventListener("click",createChat);
 $("back-to-chats").addEventListener("click",backToChats);
 $("save-name").addEventListener("click",saveDisplayName);
+$("choose-photo").addEventListener("click",()=>$("profile-photo-input").click());
+$("profile-photo-input").addEventListener("change",event=>{
+  const file=event.target.files?.[0];if(!file)return;
+  if(!file.type.startsWith("image/")){alert("Выбери файл изображения.");return;}
+  if(file.size>2*1024*1024){alert("Фото должно быть не больше 2 МБ.");return;}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const data=String(reader.result||"");
+    $("profile-avatar").style.backgroundImage="url(\\\\""+data+"\\\\")";
+    $("profile-avatar").textContent="";
+    try{localStorage.setItem("relooop-profile-photo",data);}catch(error){alert("Не удалось сохранить фото на этом устройстве.");}
+  };
+  reader.readAsDataURL(file);
+});
+$("edit-profile").addEventListener("click",()=>{
+  $("profile-edit-panel").hidden=!$("profile-edit-panel").hidden;
+  if(!$("profile-edit-panel").hidden)$("display-name").focus();
+});
+$("profile-settings").addEventListener("click",()=>showScreen("settings-screen"));
+$("profile-more").addEventListener("click",()=>showScreen("settings-screen"));
+document.querySelectorAll("[data-profile-tab]").forEach(tab=>tab.addEventListener("click",()=>{
+  document.querySelectorAll("[data-profile-tab]").forEach(item=>item.classList.toggle("active",item===tab));
+  const labels={posts:["Публикаций пока нет...","Здесь будут отображаться твои публикации"],archive:["Архив пока пуст...","Сохранённые публикации появятся здесь"],gifts:["Подарков пока нет...","Здесь будут отображаться подарки"]};
+  $("profile-empty-title").textContent=labels[tab.dataset.profileTab][0];
+  $("profile-empty-description").textContent=labels[tab.dataset.profileTab][1];
+}));
+$("profile-add").addEventListener("click",()=>alert("Раздел публикаций пока в разработке."));
 setAuthMode("login");
 supabaseClient.auth.onAuthStateChange((event,session)=>{
   if(event==="SIGNED_OUT"){currentUser=null;currentProfile=null;$("app-content").hidden=true;$("auth-screen").hidden=false;return;}
