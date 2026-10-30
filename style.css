@@ -176,3 +176,16 @@ body.contacts-mode .contacts-heading{height:64px}
 body.contacts-mode .contacts-search,body.chats-mode .chats-search{height:52px}
 body.settings-mode .settings-row{min-height:72px}
 body.settings-mode .settings-icon{width:34px;height:34px;flex-basis:34px;font-size:19px;border-radius:11px}
+
+/* Compact profile controls to match the other tabs */
+body.profile-mode .bottom-nav{height:54px;bottom:5px;width:calc(100% - 64px);max-width:500px;padding:2px}
+body.profile-mode .nav-button{font-size:10px;gap:0;padding:2px}
+body.profile-mode .nav-button span{font-size:18px;line-height:20px}
+body.profile-mode .nav-button.active{margin:2px}
+body.profile-mode .profile-actions{gap:7px;margin:9px 0 13px}
+body.profile-mode .profile-action{min-height:70px;border-radius:19px;font-size:12px;gap:5px;padding:6px 2px}
+body.profile-mode .profile-action span{font-size:24px}
+body.profile-mode .profile-more{width:34px;height:34px;font-size:24px}
+body.profile-mode .profile-add-button{font-size:15px;padding:8px 19px;bottom:68px;border-width:2px}
+body.profile-mode .profile-tabs{height:50px;padding:4px;gap:3px}
+body.profile-mode .profile-tab{font-size:12px;padding:8px 10px}
