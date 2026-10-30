@@ -42,8 +42,20 @@
         <div id="chat-list" class="chat-list"></div>
       </section>
 
-      <section class="screen" id="contacts-screen" aria-label="Контакты">
-        <div class="page-content"><h2>Контакты</h2><div class="empty-card"><div class="empty-icon">♧</div><h3>Твой круг общения</h3><p>Когда подключим аккаунты и сервер, здесь можно будет находить других пользователей ReLooop.</p><button class="primary-button" id="find-contact">Создать тестовый чат</button></div></div>
+      <section class="screen contacts-screen" id="contacts-screen" aria-label="Контакты">
+        <div class="contacts-page">
+          <header class="contacts-heading"><h2>Контакты</h2><button type="button" id="contacts-sort" aria-label="Сортировка">☷◷</button></header>
+          <label class="contacts-search"><span>⌕</span><input id="contacts-search-input" type="search" placeholder="Поиск контактов" autocomplete="off"></label>
+          <div class="contacts-shortcuts">
+            <button type="button" class="contact-shortcut" id="invite-friends"><span class="shortcut-icon invite-icon">♟＋</span><strong>Пригласить друзей</strong><b>›</b></button>
+            <button type="button" class="contact-shortcut" id="recent-calls"><span class="shortcut-icon call-icon">☎</span><strong>Недавние звонки</strong><b>›</b></button>
+          </div>
+          <div class="contacts-list-card">
+            <div class="contacts-sort-label">Сортировка по имени</div>
+            <div id="contacts-list" class="contacts-list"><div class="contacts-empty"><span>♧</span><strong>Пока нет контактов</strong><p>Добавленные пользователи ReLooop появятся здесь.</p></div></div>
+          </div>
+          <button type="button" class="contacts-add-button" id="contacts-add" aria-label="Добавить контакт">♟＋</button>
+        </div>
       </section>
 
       <section class="screen profile-screen" id="profile-screen" aria-label="Профиль">
