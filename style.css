@@ -75,3 +75,19 @@ body.profile-mode .nav-button.active{color:#258fd4;background:#e6f3fc;margin:5px
 .profile-add-button{position:fixed;z-index:4;bottom:89px;left:50%;transform:translateX(-50%);border:3px solid #fff;border-radius:32px;background:#269be5;color:#fff;font-weight:750;font-size:19px;padding:12px 27px;box-shadow:0 2px 8px #0002;white-space:nowrap}
 @media(min-width:621px){body.profile-mode .bottom-nav{max-width:590px}.profile-add-button{bottom:92px}}
 @media(max-width:370px){.profile-action{font-size:12px}.profile-detail strong{font-size:16px}.profile-tab{font-size:12px;padding:10px}}
+
+/* Settings screen — light Telegram-inspired layout */
+body.settings-mode{background:#f0f0f4;color:#17191d}body.settings-mode .app-shell{background:#f0f0f4;color:#17191d}body.settings-mode .topbar{display:none}
+body.settings-mode .bottom-nav{background:#fff;border:1px solid #e5e5e9;border-radius:38px;left:50%;bottom:7px;width:calc(100% - 28px);height:70px;box-shadow:0 3px 14px #00000012;padding-bottom:0}
+body.settings-mode .nav-button{color:#777b82;font-size:12px;font-weight:600;border-radius:30px;gap:1px}body.settings-mode .nav-button span{font-size:25px}body.settings-mode .nav-button.active{color:#258fd4;background:#e6f3fc;margin:5px}
+.settings-page{min-height:calc(100dvh - 70px);padding:0 14px 105px;background:#f0f0f4;color:#17191d}
+.settings-topline{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 8px}.settings-mini-logo{font-size:23px;font-weight:900;letter-spacing:-3px}.settings-mini-logo span{color:#289be4}
+.settings-top-actions{display:flex;gap:18px}.settings-top-actions button{border:0;background:transparent;color:#17191d;font-size:30px;width:34px;height:42px}
+.settings-profile{display:flex;align-items:center;flex-direction:column;padding:8px 0 27px}.settings-avatar{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#3299df,#1c6099);background-size:cover;background-position:center;color:white;font-size:65px;font-weight:800}
+.settings-profile h2{font-size:29px;margin:24px 0 6px;font-weight:750}.settings-profile p{font-size:14px;font-weight:650;color:#858990;margin:0;text-align:center;overflow-wrap:anywhere}
+.settings-list{background:#fff;border-radius:26px;padding:5px 0 12px;overflow:hidden}.settings-row{width:100%;min-height:96px;display:flex;align-items:center;gap:15px;padding:13px 20px;border:0;background:#fff;text-align:left;color:#17191d}.settings-row:active{background:#f5f7f9}
+.settings-icon{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;color:#fff;font-size:27px;font-weight:700}
+.account-icon{background:#2399e2}.chats-icon{background:#e8a01c}.privacy-icon{background:#39bd58}.notifications-icon{background:#ec4c62}.storage-icon{background:#477fe5}.folders-icon{background:#199fd1}.devices-icon{background:#27b8bb}.battery-icon{background:#ed8427}.language-icon{background:#b65ce0}
+.settings-row>span:nth-child(2){min-width:0;display:flex;flex-direction:column;gap:8px;flex:1}.settings-row strong{font-size:17px;font-weight:750}.settings-row small{font-size:13px;line-height:1.35;color:#858990;font-weight:650}.settings-row>b{color:#c0c3c8;font-size:23px;font-weight:400}
+.settings-account-footer{border-top:1px solid #f0f0f2;margin:5px 20px 0;padding:14px 0 4px;color:#858990;font-size:12px;overflow-wrap:anywhere}.settings-account-footer p{margin:5px 0}.settings-logout{margin-top:10px;border:0;border-radius:12px;padding:11px 15px;background:#fff0f0;color:#d84b4b;font-weight:700}
+@media(min-width:621px){body.settings-mode .bottom-nav{max-width:590px}.settings-page{max-width:650px;margin:auto}}
