@@ -165,6 +165,7 @@ function showScreen(screenId){
   currentScreen=screenId;closeConversation();
   document.body.classList.toggle("profile-mode",screenId==="profile-screen");
   document.body.classList.toggle("settings-mode",screenId==="settings-screen");
+  document.body.classList.toggle("contacts-mode",screenId==="contacts-screen");
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===screenId));
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
@@ -281,3 +282,16 @@ document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("c
   const messages={chats:"Настройки оформления чатов скоро появятся.",privacy:"Настройки конфиденциальности скоро появятся.",notifications:"Настройки уведомлений скоро появятся.",storage:"Управление памятью скоро появится.",folders:"Папки чатов скоро появятся.",devices:"Управление устройствами скоро появится.",battery:"Энергосбережение скоро появится.",language:"Сейчас доступен русский язык."};
   alert(messages[key]||"Этот раздел скоро появится.");
 }));
+
+$("contacts-search-input").addEventListener("input",()=>{
+  const empty=$("contacts-list").querySelector(".contacts-empty");
+  if(empty){const q=$("contacts-search-input").value.trim();empty.querySelector("strong").textContent=q?"Ничего не найдено":"Пока нет контактов";}
+});
+$("invite-friends").addEventListener("click",()=>{
+  if(navigator.share){navigator.share({title:"Присоединяйся к ReLooop",text:"Давай общаться в ReLooop!",url:"https://borgilovsana-ship-it.github.io/ReLooop/"}).catch(()=>{});}
+  else if(navigator.clipboard){navigator.clipboard.writeText("https://borgilovsana-ship-it.github.io/ReLooop/").then(()=>alert("Ссылка на ReLooop скопирована!")).catch(()=>alert("ReLooop: https://borgilovsana-ship-it.github.io/ReLooop/"));}
+  else alert("ReLooop: https://borgilovsana-ship-it.github.io/ReLooop/");
+});
+$("recent-calls").addEventListener("click",()=>alert("История звонков появится, когда в ReLooop появятся звонки."));
+$("contacts-sort").addEventListener("click",()=>alert("Контакты будут сортироваться по имени."));
+$("contacts-add").addEventListener("click",()=>alert("Поиск и добавление пользователей добавим отдельным обновлением."));
