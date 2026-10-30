@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#17212b">
   <meta name="description" content="ReLooop — твои сообщения, твой круг.">
   <title>ReLooop — мессенджер</title>
-  <link rel="stylesheet" href="style.css?v=username-is-name-1">
+  <link rel="stylesheet" href="style.css?v=telegram-profile-1">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -66,7 +66,7 @@
       <section class="screen profile-screen" id="profile-screen" aria-label="Профиль">
         <div class="profile-page">
           <header class="profile-topline"><div class="profile-mini-logo">R</div><button class="profile-more" id="profile-more" type="button" aria-label="Дополнительно">⋮</button></header>
-          <div class="profile-hero"><div class="profile-photo-wrap"><div class="profile-photo" id="profile-avatar">R</div><input id="profile-photo-input" type="file" accept="image/*" hidden></div><h2 id="profile-heading">Мой профиль</h2><p class="profile-online"><span></span> В сети</p></div>
+          <div class="profile-hero"><div class="profile-photo-wrap"><div class="profile-photo" id="profile-avatar">R</div><input id="profile-photo-input" type="file" accept="image/*" hidden></div><h2 id="profile-heading">Мой профиль</h2><p class="profile-username-handle" id="profile-username-handle">@username</p><p class="profile-online"><span></span> В сети</p></div>
           <div class="profile-actions"><button type="button" id="choose-photo" class="profile-action"><span>▧＋</span>Выбрать фото</button><button type="button" id="edit-profile" class="profile-action"><span>✎</span>Изменить</button><button type="button" id="profile-settings" class="profile-action"><span>⚙</span>Настройки</button></div>
           <div class="profile-edit-panel" id="profile-edit-panel" hidden><div class="username-editor"><label for="username-input">Имя пользователя (@)</label><input id="username-input" class="text-field" type="text" minlength="3" maxlength="24" autocomplete="off" placeholder="username"><p id="username-cooldown" class="username-cooldown" aria-live="polite">Имя пользователя можно менять раз в 7 дней.</p><button class="primary-button" id="save-username" type="button">Сохранить имя пользователя</button></div></div>
           <div class="profile-music">♫ &nbsp; Музыка пока не добавлена &nbsp;›</div>
@@ -89,7 +89,7 @@
             <p id="settings-account-line">ReLooop</p>
           </div>
           <div class="settings-list">
-            <button class="settings-row" type="button" data-setting="account"><span class="settings-icon account-icon">♙</span><span><strong>Аккаунт</strong><small>Номер, имя пользователя, «О себе»</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="account"><span class="settings-icon account-icon">♙</span><span><strong>Имя пользователя</strong><small id="settings-username-hint">@username · изменить</small></span><b>›</b></button>
             <button class="settings-row" type="button" data-setting="chats"><span class="settings-icon chats-icon">☰</span><span><strong>Настройки чатов</strong><small>Обои, ночной режим, анимации</small></span><b>›</b></button>
             <button class="settings-row" type="button" data-setting="privacy"><span class="settings-icon privacy-icon">⚿</span><span><strong>Конфиденциальность</strong><small>Время захода, устройства, ключи доступа</small></span><b>›</b></button>
             <button class="settings-row" type="button" data-setting="notifications"><span class="settings-icon notifications-icon">◖</span><span><strong>Уведомления</strong><small>Звуки, звонки, счётчик сообщений</small></span><b>›</b></button>
@@ -120,6 +120,6 @@
     </nav>
     </div>
   </div>
-  <script src="app.js?v=username-is-name-1"></script>
+  <script src="app.js?v=telegram-profile-1"></script>
 </body>
 </html>
