@@ -280,3 +280,14 @@ body.chats-mode .chat-preview{font-size:11px;margin-top:5px}
 body.chats-mode .chats-fab{width:42px;height:42px;right:18px;bottom:64px;font-size:22px}
 body.chats-mode .empty-state{padding:30px 14px;font-size:12px}
 @media(min-width:621px){body.chats-mode .chats-page{max-width:650px;margin:auto}}
+
+
+/* Weekly username editor */
+.username-editor{border-top:1px solid #e8e9ec;margin-top:15px;padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.username-editor label{font-size:13px;font-weight:700;color:#333}
+.username-editor .text-field{width:100%;box-sizing:border-box}
+.username-cooldown{font-size:11px;color:#777d85;margin:0 2px;line-height:1.4}
+#save-username:disabled{opacity:.55;cursor:not-allowed}
+body.profile-mode .username-editor{margin-top:11px;padding-top:11px;gap:6px}
+body.profile-mode .username-editor label{font-size:11px}
+body.profile-mode .username-cooldown{font-size:10px}
