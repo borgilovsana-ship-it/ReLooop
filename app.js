@@ -38,7 +38,6 @@ try {
 }
 
 function persistDemo(){
-  try { localStorage.setItem("relooop-demo-v1",JSON.stringify({chats,displayName:$("display-name").value})); }
   catch(error) { console.warn("Браузер не разрешил сохранить демо-данные.",error); }
 }
 function escapeHTML(value){
@@ -292,19 +291,6 @@ async function saveUsername(){
   alert("Имя пользователя успешно изменено!");
 }
 
-async function saveDisplayName(){
-  const displayName=$("display-name")?.value.trim().slice(0,40);
-  if(!displayName)return;
-  const {data,error}=await supabaseClient.from("profiles").update({display_name:displayName}).eq("id",currentUser.id).select("id,username,username_changed_at").single();
-  if(error){alert("Не удалось сохранить имя: "+authErrorMessage(error));return;}
-  currentProfile=data;persistDemo();
-  $("profile-heading").textContent="@"+data.username;
-  if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(data.username)[0].toUpperCase();
-  $("profile-edit-panel").hidden=true;
-  $("account-username").textContent="Логин: @"+data.username;
-  $("profile-detail-username").textContent="@"+data.username;
-
-}
 
 $("show-login").addEventListener("click",()=>setAuthMode("login"));
 $("show-signup").addEventListener("click",()=>setAuthMode("signup"));
