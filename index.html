@@ -46,9 +46,15 @@
         <div class="page-content"><h2>Контакты</h2><div class="empty-card"><div class="empty-icon">♧</div><h3>Твой круг общения</h3><p>Когда подключим аккаунты и сервер, здесь можно будет находить других пользователей ReLooop.</p><button class="primary-button" id="find-contact">Создать тестовый чат</button></div></div>
       </section>
 
+      <section class="screen" id="profile-screen" aria-label="Профиль">
+        <div class="page-content"><h2>Профиль</h2>
+          <div class="settings-card"><div class="profile-avatar" id="profile-avatar">R</div><h3 id="profile-heading">Мой профиль</h3><p class="muted" id="profile-username"></p><label for="display-name">Отображаемое имя</label><input id="display-name" class="text-field" maxlength="40" placeholder="Например, Алекс"><button class="primary-button" id="save-name">Сохранить имя</button></div>
+          <div class="settings-card"><h3>Данные аккаунта</h3><p class="muted" id="profile-email">Загрузка аккаунта…</p></div>
+        </div>
+      </section>
+
       <section class="screen" id="settings-screen" aria-label="Настройки">
         <div class="page-content"><h2>Настройки</h2>
-          <div class="settings-card"><div class="profile-avatar">R</div><h3>Твой профиль</h3><label for="display-name">Отображаемое имя</label><input id="display-name" class="text-field" maxlength="40" placeholder="Например, Алекс"><button class="primary-button" id="save-name">Сохранить имя</button></div>
           <div class="settings-card"><h3>Аккаунт</h3><p class="muted" id="account-email">Загрузка аккаунта…</p><p class="muted" id="account-username"></p><button class="primary-button" id="sign-out" type="button">Выйти из аккаунта</button><p class="muted">Вход и регистрация подключены. Чаты пока остаются демоверсией; следующим шагом подключим реальные сообщения.</p></div>
         </div>
       </section>
@@ -64,6 +70,7 @@
     <nav class="bottom-nav" id="bottom-nav" aria-label="Основная навигация">
       <button class="nav-button active" data-screen="chats-screen"><span>▤</span>Чаты</button>
       <button class="nav-button" data-screen="contacts-screen"><span>♧</span>Контакты</button>
+      <button class="nav-button" data-screen="profile-screen"><span>●</span>Профиль</button>
       <button class="nav-button" data-screen="settings-screen"><span>⚙</span>Настройки</button>
     </nav>
     </div>
