@@ -172,15 +172,32 @@ function renderChats(){
     info.append(titleLine,preview);button.append(avatar,info);button.addEventListener("click",()=>openChat(chat.id));list.appendChild(button);
   });
 }
+async function loadUsers(force=false){
+ const list=$("users-list");if(usersLoaded&&!force){renderUsers();return;}
+ list.replaceChildren();const loading=document.createElement("div");loading.className="users-state";loading.textContent="Загружаем пользователей…";list.appendChild(loading);$("users-count").textContent="Загрузка…";
+ const {data,error}=await supabaseClient.from("profiles").select("id,username,display_name").order("display_name",{ascending:true}).limit(100);
+ if(error){list.replaceChildren();const state=document.createElement("div");state.className="users-state";state.textContent="Не удалось загрузить юзеров.";const retry=document.createElement("button");retry.className="users-retry";retry.textContent="Повторить";retry.addEventListener("click",()=>loadUsers(true));state.appendChild(retry);list.appendChild(state);$("users-count").textContent="";return;}
+ usersCache=data||[];usersLoaded=true;renderUsers();
+}
+function renderUsers(){
+ if(selectedUser)return;const q=$("users-search-input").value.trim().toLocaleLowerCase("ru");const visible=usersCache.filter(u=>(u.username||"").toLocaleLowerCase("ru").includes(q)||(u.display_name||"").toLocaleLowerCase("ru").includes(q));const list=$("users-list");list.replaceChildren();$("users-count").textContent=usersCache.length+(usersCache.length===100?"+":"")+" пользователей";
+ if(!visible.length){const state=document.createElement("div");state.className="users-state";state.textContent=q?"Никого не нашли.":"Пока нет зарегистрированных пользователей.";list.appendChild(state);return;}
+ visible.forEach(u=>{const row=document.createElement("button");row.type="button";row.className="user-row";const avatar=document.createElement("span");avatar.className="user-row-avatar";avatar.textContent=Array.from(u.display_name||u.username||"U")[0].toUpperCase();const info=document.createElement("span");info.className="user-row-info";const name=document.createElement("strong");name.textContent=u.display_name||"Пользователь";const nick=document.createElement("small");nick.textContent="@"+u.username;info.append(name,nick);const arrow=document.createElement("b");arrow.textContent="›";row.append(avatar,info,arrow);row.addEventListener("click",()=>openUserProfile(u));list.appendChild(row);});
+}
+function openUserProfile(u){selectedUser=u;$("users-list").hidden=true;$("users-search").hidden=true;$("user-profile-view").hidden=false;$("user-view-avatar").textContent=Array.from(u.display_name||u.username||"U")[0].toUpperCase();$("user-view-name").textContent=u.display_name||"Пользователь";$("user-view-username").textContent="@"+u.username;}
+function closeUserProfile(){selectedUser=null;$("users-list").hidden=false;$("users-search").hidden=false;$("user-profile-view").hidden=true;renderUsers();}
+
 function showScreen(screenId){
   currentScreen=screenId;closeConversation();
   document.body.classList.toggle("profile-mode",screenId==="profile-screen");
   document.body.classList.toggle("settings-mode",screenId==="settings-screen");
   document.body.classList.toggle("contacts-mode",screenId==="contacts-screen");
   document.body.classList.toggle("chats-mode",screenId==="chats-screen");
+  document.body.classList.toggle("users-mode",screenId==="users-screen");
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===screenId));
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
+  if(screenId==="users-screen")loadUsers();
 }
 function openChat(id){
   const chat=chats.find(item=>item.id===id);if(!chat)return;
@@ -349,6 +366,8 @@ document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("c
   alert(messages[key]||"Этот раздел скоро появится.");
 }));
 
+$("users-search-input").addEventListener("input",renderUsers);
+$("user-profile-back").addEventListener("click",closeUserProfile);
 $("contacts-search-input").addEventListener("input",()=>{
   const empty=$("contacts-list").querySelector(".contacts-empty");
   if(empty){const q=$("contacts-search-input").value.trim();empty.querySelector("strong").textContent=q?"Ничего не найдено":"Пока нет контактов";}
