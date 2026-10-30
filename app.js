@@ -21,6 +21,13 @@ let currentScreen = "chats-screen";
 let authMode = "login";
 let currentUser = null;
 let currentProfile = null;
+let appInitPromise = null;
+async function openUserApp(user){
+  currentUser=user;
+  if(appInitPromise) return appInitPromise;
+  appInitPromise=(async()=>{await ensureProfile();showAuthenticatedApp();})();
+  try{await appInitPromise;}finally{appInitPromise=null;}
+}
 
 try {
   const saved = JSON.parse(localStorage.getItem("relooop-demo-v1") || "null");
@@ -73,16 +80,16 @@ async function handleAuth(event){
       });
       if(error) throw error;
       if(data.session){
-        currentUser=data.user;
         setAuthMessage("Аккаунт создан, открываем ReLooop…");
+        await openUserApp(data.user);
       }else{
         setAuthMessage("Аккаунт создан. Проверь почту и подтверди адрес, затем войди здесь.");
       }
     }else{
       const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
       if(error) throw error;
-      currentUser=data.user;
       setAuthMessage("Вход выполнен, открываем ReLooop…");
+      await openUserApp(data.user);
     }
   }catch(error){
     setAuthMessage(authErrorMessage(error),true);
@@ -270,7 +277,7 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
   if(session?.user){
     currentUser=session.user;
     // Avoid making Supabase calls directly inside the auth callback.
-    setTimeout(async()=>{try{await ensureProfile();showAuthenticatedApp();}catch(error){$("auth-screen").hidden=false;$("app-content").hidden=true;setAuthMessage(authErrorMessage(error),true);}},0);
+    setTimeout(async()=>{try{await openUserApp(session.user);}catch(error){$("auth-screen").hidden=false;$("app-content").hidden=true;setAuthMessage("Вход выполнен, но не удалось загрузить профиль: "+authErrorMessage(error),true);}},0);
   }
 });
 
