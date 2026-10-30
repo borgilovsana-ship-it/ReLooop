@@ -39,3 +39,39 @@ button:focus-visible,input:focus-visible{outline:2px solid #70b7ff;outline-offse
 .auth-submit{width:100%;margin-top:10px}.auth-submit:disabled{opacity:.65;cursor:wait}
 .auth-message{min-height:20px;font-size:13px;line-height:1.5;color:#a8e3c2;overflow-wrap:anywhere}.auth-message.error{color:#ffaaa8}
 .auth-footnote{font-size:11px;line-height:1.5;color:var(--muted);margin:12px 0 0}
+
+/* Profile layout inspired by the supplied reference */
+body.profile-mode{background:#f0f0f4;color:#17191d}
+body.profile-mode .app-shell{background:#f0f0f4;color:#17191d}
+body.profile-mode .topbar{display:none}
+body.profile-mode .bottom-nav{background:#fff;border:1px solid #e5e5e9;border-radius:38px;left:50%;bottom:7px;width:calc(100% - 28px);height:70px;box-shadow:0 3px 14px #00000012;padding-bottom:0}
+body.profile-mode .nav-button{color:#777b82;font-size:12px;font-weight:600;border-radius:30px;gap:1px}
+body.profile-mode .nav-button span{font-size:25px}
+body.profile-mode .nav-button.active{color:#258fd4;background:#e6f3fc;margin:5px}
+.profile-page{min-height:calc(100dvh - 70px);padding:0 14px 100px;background:#f0f0f4;color:#17191d;position:relative}
+.profile-topline{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 8px}
+.profile-mini-logo{font-size:21px;font-weight:850;letter-spacing:-2px;color:#15171b}
+.profile-more{border:0;background:transparent;color:#17191d;font-size:29px;width:42px;height:42px}
+.profile-hero{display:flex;align-items:center;flex-direction:column;padding:16px 0 23px}
+.profile-photo{width:150px;height:150px;border-radius:50%;background:linear-gradient(145deg,#3397d8,#1b5c91);display:grid;place-items:center;color:#fff;font-size:66px;font-weight:750;background-size:cover;background-position:center;overflow:hidden}
+.profile-hero h2{font-size:30px;line-height:1.15;margin:28px 0 12px;font-weight:750}
+.profile-online{margin:0;color:#7b8087;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.profile-online span{width:17px;height:17px;border:2px solid #25282d;border-radius:5px;display:inline-block;position:relative}
+.profile-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0 17px}
+.profile-action{min-height:92px;border:0;border-radius:25px;background:#fff;color:#17191d;font-size:14px;font-weight:650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:8px 3px}
+.profile-action span{font-size:30px;line-height:1}
+.profile-music{width:max-content;max-width:100%;margin:0 auto 28px;padding:9px 17px;border-radius:24px;background:#fff;color:#202228;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-details{background:#fff;border-radius:25px;padding:3px 0;margin:0 0 27px}
+.profile-detail{padding:18px 21px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.profile-detail strong{font-size:18px;overflow-wrap:anywhere}
+.profile-detail span{font-size:14px;color:#858990;font-weight:650}
+.profile-tabs{height:62px;background:#fff;border-radius:34px;display:flex;align-items:center;gap:5px;padding:6px;overflow-x:auto;scrollbar-width:none}
+.profile-tabs::-webkit-scrollbar{display:none}
+.profile-tab{flex:1;min-width:max-content;border:0;background:transparent;border-radius:25px;padding:11px 13px;color:#858990;font-weight:700;font-size:14px}
+.profile-tab.active{background:#e0effa;color:#368fc5}
+.profile-empty{text-align:center;padding:58px 10px 20px}
+.profile-empty h3{font-size:22px;margin:0 0 14px}
+.profile-empty p{font-size:14px;color:#858990;font-weight:600;line-height:1.5;margin:0}
+.profile-add-button{position:fixed;z-index:4;bottom:89px;left:50%;transform:translateX(-50%);border:3px solid #fff;border-radius:32px;background:#269be5;color:#fff;font-weight:750;font-size:19px;padding:12px 27px;box-shadow:0 2px 8px #0002;white-space:nowrap}
+@media(min-width:621px){body.profile-mode .bottom-nav{max-width:590px}.profile-add-button{bottom:92px}}
+@media(max-width:370px){.profile-action{font-size:12px}.profile-detail strong{font-size:16px}.profile-tab{font-size:12px;padding:10px}}
