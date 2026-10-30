@@ -139,7 +139,9 @@ function showAuthenticatedApp(){
   updateUsernameCooldown();
 
   try{const photo=localStorage.getItem("relooop-profile-photo");if(photo) $("profile-avatar").style.backgroundImage="url("+photo+")";}catch(error){}
-  $("profile-heading").textContent=currentProfile?.username?"@"+currentProfile.username:"Мой профиль";
+  $("profile-heading").textContent=currentProfile?.username||"Мой профиль";
+  $("profile-username-handle").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
+  $("settings-username-hint").textContent=currentProfile?.username?"@"+currentProfile.username+" · изменить":"Изменить имя пользователя";
   if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(currentProfile?.username||"R")[0].toUpperCase();
   document.body.classList.add("chats-mode");
   renderChats();
@@ -283,7 +285,9 @@ async function saveUsername(){
   currentProfile=data;
   $("username-input").value=data.username;
   $("profile-detail-username").textContent="@"+data.username;
-  $("profile-heading").textContent="@"+data.username;
+  $("profile-heading").textContent=data.username;
+  $("profile-username-handle").textContent="@"+data.username;
+  $("settings-username-hint").textContent="@"+data.username+" · изменить";
   $("settings-display-name").textContent=data.username;
   $("settings-avatar").textContent=Array.from(data.username)[0].toUpperCase();
   $("account-username").textContent="Имя пользователя: @"+data.username;
@@ -346,7 +350,7 @@ $("settings-search").addEventListener("click",()=>{showScreen("chats-screen");$(
 $("settings-more").addEventListener("click",()=>alert("Дополнительные настройки ReLooop появятся позже."));
 document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("click",()=>{
   const key=row.dataset.setting;
-  if(key==="account"){showScreen("profile-screen");return;}
+  if(key==="account"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("username-input").focus();return;}
   const messages={chats:"Настройки оформления чатов скоро появятся.",privacy:"Настройки конфиденциальности скоро появятся.",notifications:"Настройки уведомлений скоро появятся.",storage:"Управление памятью скоро появится.",folders:"Папки чатов скоро появятся.",devices:"Управление устройствами скоро появится.",battery:"Энергосбережение скоро появится.",language:"Сейчас доступен русский язык."};
   alert(messages[key]||"Этот раздел скоро появится.");
 }));
