@@ -46,10 +46,16 @@
         <div class="page-content"><h2>Контакты</h2><div class="empty-card"><div class="empty-icon">♧</div><h3>Твой круг общения</h3><p>Когда подключим аккаунты и сервер, здесь можно будет находить других пользователей ReLooop.</p><button class="primary-button" id="find-contact">Создать тестовый чат</button></div></div>
       </section>
 
-      <section class="screen" id="profile-screen" aria-label="Профиль">
-        <div class="page-content"><h2>Профиль</h2>
-          <div class="settings-card"><div class="profile-avatar" id="profile-avatar">R</div><h3 id="profile-heading">Мой профиль</h3><p class="muted" id="profile-username"></p><label for="display-name">Отображаемое имя</label><input id="display-name" class="text-field" maxlength="40" placeholder="Например, Алекс"><button class="primary-button" id="save-name">Сохранить имя</button></div>
-          <div class="settings-card"><h3>Данные аккаунта</h3><p class="muted" id="profile-email">Загрузка аккаунта…</p></div>
+      <section class="screen profile-screen" id="profile-screen" aria-label="Профиль">
+        <div class="profile-page">
+          <header class="profile-topline"><div class="profile-mini-logo">R</div><button class="profile-more" id="profile-more" type="button" aria-label="Дополнительно">⋮</button></header>
+          <div class="profile-hero"><div class="profile-photo-wrap"><div class="profile-photo" id="profile-avatar">R</div><input id="profile-photo-input" type="file" accept="image/*" hidden></div><h2 id="profile-heading">Мой профиль</h2><p class="profile-online"><span></span> В сети</p></div>
+          <div class="profile-actions"><button type="button" id="choose-photo" class="profile-action"><span>▧＋</span>Выбрать фото</button><button type="button" id="edit-profile" class="profile-action"><span>✎</span>Изменить</button><button type="button" id="profile-settings" class="profile-action"><span>⚙</span>Настройки</button></div>
+          <div class="profile-music">♫ &nbsp; Музыка пока не добавлена &nbsp;›</div>
+          <div class="profile-details"><div class="profile-detail"><strong id="profile-detail-username">@username</strong><span>Имя пользователя</span></div><div class="profile-detail"><strong id="profile-detail-email">—</strong><span>Электронная почта</span></div><div class="profile-detail"><strong>ReLooop</strong><span>Твой мессенджер</span></div></div>
+          <div class="profile-tabs" role="tablist" aria-label="Разделы профиля"><button type="button" class="profile-tab active" data-profile-tab="posts">Публикации</button><button type="button" class="profile-tab" data-profile-tab="archive">Архив</button><button type="button" class="profile-tab" data-profile-tab="gifts">Подарки</button></div>
+          <div class="profile-empty"><h3 id="profile-empty-title">Публикаций пока нет...</h3><p id="profile-empty-description">Здесь будут отображаться твои публикации</p></div>
+          <button type="button" class="profile-add-button" id="profile-add">＋ &nbsp; Добавить</button>
         </div>
       </section>
 
@@ -70,8 +76,8 @@
     <nav class="bottom-nav" id="bottom-nav" aria-label="Основная навигация">
       <button class="nav-button active" data-screen="chats-screen"><span>▤</span>Чаты</button>
       <button class="nav-button" data-screen="contacts-screen"><span>♧</span>Контакты</button>
-      <button class="nav-button" data-screen="profile-screen"><span>●</span>Профиль</button>
       <button class="nav-button" data-screen="settings-screen"><span>⚙</span>Настройки</button>
+      <button class="nav-button" data-screen="profile-screen"><span>●</span>Профиль</button>
     </nav>
     </div>
   </div>
