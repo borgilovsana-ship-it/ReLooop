@@ -240,7 +240,6 @@ function createChat(){
   const chat={id:"local-"+Date.now(),name,avatar:Array.from(name)[0].toUpperCase(),color:"#477da8",preview:"Новый демо-чат",messages:[]};
   chats.unshift(chat);persistDemo();$("search").value="";showScreen("chats-screen");renderChats();openChat(chat.id);
 }
-async 
 function updateUsernameCooldown(){
   const changedAt=currentProfile?.username_changed_at?new Date(currentProfile.username_changed_at):null;
   const remaining=changedAt?changedAt.getTime()+7*24*60*60*1000-Date.now():0;
@@ -293,7 +292,7 @@ async function saveUsername(){
   alert("Никнейм успешно изменён!");
 }
 
-function saveDisplayName(){
+async function saveDisplayName(){
   const displayName=$("display-name").value.trim().slice(0,40);
   if(!displayName){alert("Введи имя.");return;}
   const {data,error}=await supabaseClient.from("profiles").update({display_name:displayName}).eq("id",currentUser.id).select("id,username,display_name,username_changed_at").single();
