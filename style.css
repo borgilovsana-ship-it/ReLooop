@@ -160,3 +160,19 @@ body.contacts-mode .contacts-add-button{width:52px;height:52px;right:22px;bottom
 body.contacts-mode .contacts-heading button{font-size:23px;padding:6px}
 body.settings-mode .settings-row{min-height:84px}
 body.settings-mode .settings-icon{width:40px;height:40px;flex-basis:40px;font-size:23px;border-radius:13px}
+
+/* Extra-compact buttons */
+body.chats-mode .bottom-nav,body.contacts-mode .bottom-nav,body.settings-mode .bottom-nav{height:54px;bottom:5px;width:calc(100% - 64px);max-width:500px;padding:2px}
+body.chats-mode .nav-button,body.contacts-mode .nav-button,body.settings-mode .nav-button{font-size:10px;gap:0;padding:2px}
+body.chats-mode .nav-button span,body.contacts-mode .nav-button span,body.settings-mode .nav-button span{font-size:18px;line-height:20px}
+body.chats-mode .nav-button.active,body.contacts-mode .nav-button.active,body.settings-mode .nav-button.active{margin:2px}
+body.chats-mode .chat-tabs{height:46px;padding:3px;border-radius:28px;margin-bottom:12px}
+body.chats-mode .chat-tab{height:40px;font-size:13px}
+body.chats-mode .chat-tab span{min-width:18px;height:18px;font-size:10px;padding:0 4px}
+body.chats-mode .chats-fab,body.contacts-mode .contacts-add-button{width:44px;height:44px;right:18px;bottom:68px;font-size:23px}
+body.contacts-mode .contact-shortcut{height:62px;gap:11px}
+body.contacts-mode .shortcut-icon{width:34px;height:34px;flex-basis:34px;font-size:18px;border-radius:11px}
+body.contacts-mode .contacts-heading{height:64px}
+body.contacts-mode .contacts-search,body.chats-mode .chats-search{height:52px}
+body.settings-mode .settings-row{min-height:72px}
+body.settings-mode .settings-icon{width:34px;height:34px;flex-basis:34px;font-size:19px;border-radius:11px}
