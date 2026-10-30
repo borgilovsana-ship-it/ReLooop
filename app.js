@@ -123,6 +123,10 @@ function showAuthenticatedApp(){
   $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
   $("account-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
   $("profile-detail-email").textContent=currentUser?.email||"—";
+  $("settings-display-name").textContent=currentProfile?.display_name||"Мой профиль";
+  $("settings-account-line").textContent=(currentUser?.email||"")+(currentProfile?.username?" • @"+currentProfile.username:"");
+  $("settings-avatar").textContent=currentProfile?.display_name?Array.from(currentProfile.display_name)[0].toUpperCase():"R";
+  try{const photo=localStorage.getItem("relooop-profile-photo");if(photo){$("settings-avatar").style.backgroundImage="url("+photo+")";$("settings-avatar").textContent="";}}catch(error){}
   $("profile-detail-username").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
   $("display-name").value=currentProfile?.display_name||"";
   try{const photo=localStorage.getItem("relooop-profile-photo");if(photo) $("profile-avatar").style.backgroundImage="url("+photo+")";}catch(error){}
@@ -160,6 +164,7 @@ function renderChats(){
 function showScreen(screenId){
   currentScreen=screenId;closeConversation();
   document.body.classList.toggle("profile-mode",screenId==="profile-screen");
+  document.body.classList.toggle("settings-mode",screenId==="settings-screen");
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===screenId));
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
@@ -267,3 +272,12 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
     setTimeout(async()=>{try{await ensureProfile();showAuthenticatedApp();}catch(error){$("auth-screen").hidden=false;$("app-content").hidden=true;setAuthMessage(authErrorMessage(error),true);}},0);
   }
 });
+
+$("settings-search").addEventListener("click",()=>{showScreen("chats-screen");$("search").focus();});
+$("settings-more").addEventListener("click",()=>alert("Дополнительные настройки ReLooop появятся позже."));
+document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("click",()=>{
+  const key=row.dataset.setting;
+  if(key==="account"){showScreen("profile-screen");return;}
+  const messages={chats:"Настройки оформления чатов скоро появятся.",privacy:"Настройки конфиденциальности скоро появятся.",notifications:"Настройки уведомлений скоро появятся.",storage:"Управление памятью скоро появится.",folders:"Папки чатов скоро появятся.",devices:"Управление устройствами скоро появится.",battery:"Энергосбережение скоро появится.",language:"Сейчас доступен русский язык."};
+  alert(messages[key]||"Этот раздел скоро появится.");
+}));
