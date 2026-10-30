@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#17212b">
   <meta name="description" content="ReLooop — твои сообщения, твой круг.">
   <title>ReLooop — мессенджер</title>
-  <link rel="stylesheet" href="style.css?v=users-directory-1">
+  <link rel="stylesheet" href="style.css?v=username-is-name-1">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -62,13 +62,13 @@
         </div>
       </section>
 
-      <section class="screen users-screen" id="users-screen" aria-label="Юзеры"><div class="users-page"><header class="users-heading"><h2>Юзеры</h2><span id="users-count">Загрузка…</span></header><label class="users-search" id="users-search"><span>⌕</span><input id="users-search-input" type="search" placeholder="Найти по нику или имени" autocomplete="off"></label><div id="users-list" class="users-list"><div class="users-state">Загружаем пользователей…</div></div><div id="user-profile-view" class="user-profile-view" hidden><button type="button" id="user-profile-back" class="user-profile-back">‹ Все юзеры</button><div class="user-profile-card"><div class="user-profile-avatar" id="user-view-avatar">U</div><h2 id="user-view-name">Пользователь</h2><p id="user-view-username">@username</p><span class="user-profile-label">Пользователь ReLooop</span></div></div></div></section>
+      <section class="screen users-screen" id="users-screen" aria-label="Юзеры"><div class="users-page"><header class="users-heading"><h2>Юзеры</h2><span id="users-count">Загрузка…</span></header><label class="users-search" id="users-search"><span>⌕</span><input id="users-search-input" type="search" placeholder="Найти пользователя по юзернейму" autocomplete="off"></label><div id="users-list" class="users-list"><div class="users-state">Загружаем пользователей…</div></div><div id="user-profile-view" class="user-profile-view" hidden><button type="button" id="user-profile-back" class="user-profile-back">‹ Все юзеры</button><div class="user-profile-card"><div class="user-profile-avatar" id="user-view-avatar">U</div><h2 id="user-view-name">Пользователь</h2><p id="user-view-username">@username</p><span class="user-profile-label">Пользователь ReLooop</span></div></div></div></section>
       <section class="screen profile-screen" id="profile-screen" aria-label="Профиль">
         <div class="profile-page">
           <header class="profile-topline"><div class="profile-mini-logo">R</div><button class="profile-more" id="profile-more" type="button" aria-label="Дополнительно">⋮</button></header>
           <div class="profile-hero"><div class="profile-photo-wrap"><div class="profile-photo" id="profile-avatar">R</div><input id="profile-photo-input" type="file" accept="image/*" hidden></div><h2 id="profile-heading">Мой профиль</h2><p class="profile-online"><span></span> В сети</p></div>
           <div class="profile-actions"><button type="button" id="choose-photo" class="profile-action"><span>▧＋</span>Выбрать фото</button><button type="button" id="edit-profile" class="profile-action"><span>✎</span>Изменить</button><button type="button" id="profile-settings" class="profile-action"><span>⚙</span>Настройки</button></div>
-          <div class="profile-edit-panel" id="profile-edit-panel" hidden><label for="display-name">Имя профиля</label><input id="display-name" class="text-field" maxlength="40" placeholder="Твоё имя"><button class="primary-button" id="save-name" type="button">Сохранить имя</button><div class="username-editor"><label for="username-input">Никнейм (@)</label><input id="username-input" class="text-field" type="text" minlength="3" maxlength="24" autocomplete="off" placeholder="nickname"><p id="username-cooldown" class="username-cooldown" aria-live="polite">Никнейм можно менять раз в 7 дней.</p><button class="primary-button" id="save-username" type="button">Изменить никнейм</button></div></div>
+          <div class="profile-edit-panel" id="profile-edit-panel" hidden><div class="username-editor"><label for="username-input">Имя пользователя (@)</label><input id="username-input" class="text-field" type="text" minlength="3" maxlength="24" autocomplete="off" placeholder="username"><p id="username-cooldown" class="username-cooldown" aria-live="polite">Имя пользователя можно менять раз в 7 дней.</p><button class="primary-button" id="save-username" type="button">Сохранить имя пользователя</button></div></div>
           <div class="profile-music">♫ &nbsp; Музыка пока не добавлена &nbsp;›</div>
           <div class="profile-details"><div class="profile-detail"><strong id="profile-detail-username">@username</strong><span>Имя пользователя</span></div><div class="profile-detail"><strong id="profile-detail-email">—</strong><span>Электронная почта</span></div><div class="profile-detail"><strong>ReLooop</strong><span>Твой мессенджер</span></div></div>
           <div class="profile-tabs" role="tablist" aria-label="Разделы профиля"><button type="button" class="profile-tab active" data-profile-tab="posts">Публикации</button><button type="button" class="profile-tab" data-profile-tab="archive">Архив</button><button type="button" class="profile-tab" data-profile-tab="gifts">Подарки</button></div>
@@ -120,6 +120,6 @@
     </nav>
     </div>
   </div>
-  <script src="app.js?v=buttons-fix-1"></script>
+  <script src="app.js?v=username-is-name-1"></script>
 </body>
 </html>
