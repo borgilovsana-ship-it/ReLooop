@@ -122,16 +122,14 @@ function showAuthenticatedApp(){
   $("auth-screen").hidden=true;$("app-content").hidden=false;
   $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
   $("account-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
-  $("profile-email").textContent=currentUser?.email||"Аккаунт ReLooop";
   $("profile-detail-email").textContent=currentUser?.email||"—";
   $("profile-detail-username").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
   $("display-name").value=currentProfile?.display_name||"";
   try{const photo=localStorage.getItem("relooop-profile-photo");if(photo) $("profile-avatar").style.backgroundImage="url("+photo+")";}catch(error){}
-  $("profile-username").textContent=currentProfile?.username?"Логин: @"+currentProfile.username:"";
   if(currentProfile?.display_name){
     $("display-name").value=currentProfile.display_name;
     $("profile-heading").textContent=currentProfile.display_name;
-    $("profile-avatar").textContent=Array.from(currentProfile.display_name)[0].toUpperCase();
+    if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(currentProfile.display_name)[0].toUpperCase();
   }
   renderChats();
 }
@@ -217,7 +215,6 @@ async function saveDisplayName(){
   if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(displayName)[0].toUpperCase();
   $("profile-edit-panel").hidden=true;
   $("account-username").textContent="Логин: @"+data.username;
-  $("profile-username").textContent="Логин: @"+data.username;
   $("profile-detail-username").textContent="@"+data.username;
   const button=$("save-name");const oldText=button.textContent;button.textContent="Сохранено ✓";
   window.setTimeout(()=>{button.textContent=oldText;},1500);
