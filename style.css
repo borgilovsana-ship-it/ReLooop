@@ -144,3 +144,19 @@ body.chats-mode .chat-preview{font-size:14px;font-weight:600;color:#858990;margi
 .chats-fab{position:fixed;z-index:4;right:25px;bottom:91px;width:62px;height:62px;border:0;border-radius:50%;background:#269be5;color:white;font-size:34px;box-shadow:0 3px 10px #0002;line-height:1}
 body.chats-mode .empty-state{color:#858990;padding:50px 20px}
 @media(min-width:621px){body.chats-mode .bottom-nav{max-width:590px}.chats-page{max-width:650px;margin:auto}}
+
+/* Compact controls across the messenger */
+body.chats-mode .bottom-nav,body.contacts-mode .bottom-nav,body.settings-mode .bottom-nav{height:62px;bottom:6px;width:calc(100% - 44px)}
+body.chats-mode .nav-button,body.contacts-mode .nav-button,body.settings-mode .nav-button{font-size:11px}
+body.chats-mode .nav-button span,body.contacts-mode .nav-button span,body.settings-mode .nav-button span{font-size:21px}
+body.chats-mode .chats-heading button{font-size:24px;width:32px;height:36px}
+body.chats-mode .chat-tabs{height:52px;padding:4px;gap:4px}
+body.chats-mode .chat-tab{height:44px;font-size:15px}
+body.chats-mode .chat-tab span{min-width:21px;height:21px;font-size:11px}
+body.chats-mode .chats-fab{width:52px;height:52px;right:22px;bottom:78px;font-size:28px}
+body.contacts-mode .contact-shortcut{height:70px}
+body.contacts-mode .shortcut-icon{width:40px;height:40px;flex-basis:40px;font-size:21px;border-radius:13px}
+body.contacts-mode .contacts-add-button{width:52px;height:52px;right:22px;bottom:78px;font-size:24px}
+body.contacts-mode .contacts-heading button{font-size:23px;padding:6px}
+body.settings-mode .settings-row{min-height:84px}
+body.settings-mode .settings-icon{width:40px;height:40px;flex-basis:40px;font-size:23px;border-radius:13px}
