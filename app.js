@@ -242,7 +242,7 @@ $("profile-photo-input").addEventListener("change",event=>{
   const reader=new FileReader();
   reader.onload=()=>{
     const data=String(reader.result||"");
-    $("profile-avatar").style.backgroundImage="url(\\\\""+data+"\\\\")";
+    $("profile-avatar").style.backgroundImage = 'url("' + data + '")';
     $("profile-avatar").textContent="";
     try{localStorage.setItem("relooop-profile-photo",data);}catch(error){alert("Не удалось сохранить фото на этом устройстве.");}
   };
