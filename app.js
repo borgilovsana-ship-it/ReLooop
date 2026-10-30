@@ -38,6 +38,7 @@ try {
 }
 
 function persistDemo(){
+  try { localStorage.setItem("relooop-demo-v1",JSON.stringify({chats})); }
   catch(error) { console.warn("Браузер не разрешил сохранить демо-данные.",error); }
 }
 function escapeHTML(value){
