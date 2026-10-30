@@ -91,3 +91,31 @@ body.settings-mode .nav-button{color:#777b82;font-size:12px;font-weight:600;bord
 .settings-row>span:nth-child(2){min-width:0;display:flex;flex-direction:column;gap:8px;flex:1}.settings-row strong{font-size:17px;font-weight:750}.settings-row small{font-size:13px;line-height:1.35;color:#858990;font-weight:650}.settings-row>b{color:#c0c3c8;font-size:23px;font-weight:400}
 .settings-account-footer{border-top:1px solid #f0f0f2;margin:5px 20px 0;padding:14px 0 4px;color:#858990;font-size:12px;overflow-wrap:anywhere}.settings-account-footer p{margin:5px 0}.settings-logout{margin-top:10px;border:0;border-radius:12px;padding:11px 15px;background:#fff0f0;color:#d84b4b;font-weight:700}
 @media(min-width:621px){body.settings-mode .bottom-nav{max-width:590px}.settings-page{max-width:650px;margin:auto}}
+
+/* Contacts screen */
+body.contacts-mode{background:#f0f0f4;color:#17191d}body.contacts-mode .app-shell{background:#f0f0f4;color:#17191d}body.contacts-mode .topbar{display:none}
+body.contacts-mode .bottom-nav{background:#fff;border:1px solid #e5e5e9;border-radius:38px;left:50%;bottom:7px;width:calc(100% - 28px);height:70px;box-shadow:0 3px 14px #00000012;padding-bottom:0}
+body.contacts-mode .nav-button{color:#777b82;font-size:12px;font-weight:600;border-radius:30px;gap:1px}body.contacts-mode .nav-button span{font-size:25px}body.contacts-mode .nav-button.active{color:#258fd4;background:#e6f3fc;margin:5px}
+.contacts-page{min-height:calc(100dvh - 70px);padding:0 14px 110px;background:#f0f0f4;color:#17191d;position:relative}
+.contacts-heading{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 10px}
+.contacts-heading h2{font-size:28px;font-weight:650;margin:0}
+.contacts-heading button{border:0;background:transparent;color:#17191d;font-size:27px;padding:8px}
+.contacts-search{height:60px;border-radius:34px;background:#fff;box-shadow:0 2px 7px #0000000b;display:flex;align-items:center;gap:16px;padding:0 22px;margin:5px 0 22px}
+.contacts-search span{font-size:31px;color:#858990;line-height:1}
+.contacts-search input{border:0;outline:0;background:transparent;min-width:0;flex:1;font:600 17px inherit;color:#17191d}
+.contacts-search input::placeholder{color:#858990;opacity:1}
+.contacts-shortcuts{background:#fff;border-radius:26px;padding:4px 18px;margin-bottom:20px}
+.contact-shortcut{width:100%;height:82px;display:flex;align-items:center;gap:14px;border:0;background:#fff;text-align:left;color:#17191d;padding:0 12px}
+.contact-shortcut strong{font-size:17px;font-weight:750;flex:1}
+.contact-shortcut>b{color:#c3c6cb;font-size:23px;font-weight:400}
+.shortcut-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;color:white;font-size:24px;font-weight:700}
+.invite-icon{background:#2399e2}.call-icon{background:#39bd58}
+.contacts-list-card{background:#fff;border-radius:26px;padding:23px 18px 25px;min-height:360px}
+.contacts-sort-label{font-size:15px;font-weight:650;color:#398fc0;margin:0 0 16px 15px}
+.contacts-list{min-height:260px}
+.contacts-empty{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;color:#8a8e94}
+.contacts-empty>span{font-size:42px;color:#a5abb1;margin-bottom:12px}
+.contacts-empty strong{font-size:18px;color:#30343a}
+.contacts-empty p{font-size:14px;line-height:1.45;max-width:250px;margin:8px 0 0}
+.contacts-add-button{position:fixed;z-index:4;right:25px;bottom:91px;width:62px;height:62px;border:0;border-radius:50%;background:#269be5;color:white;font-size:28px;box-shadow:0 3px 10px #0002}
+@media(min-width:621px){body.contacts-mode .bottom-nav{max-width:590px}.contacts-page{max-width:650px;margin:auto}}
