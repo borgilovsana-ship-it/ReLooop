@@ -257,3 +257,26 @@ body.contacts-mode .contacts-empty strong{font-size:14px}
 body.contacts-mode .contacts-empty p{font-size:11px;max-width:220px;margin-top:6px}
 body.contacts-mode .contacts-add-button{width:42px;height:42px;right:18px;bottom:64px;font-size:20px}
 @media(min-width:621px){body.contacts-mode .contacts-page{max-width:650px;margin:auto}}
+
+
+/* Compact the entire chats page */
+body.chats-mode .chats-page{padding:0 12px 82px;min-height:calc(100dvh - 58px)}
+body.chats-mode .chats-heading{height:46px;gap:9px;padding:0 5px}
+body.chats-mode .chats-brand-icon{width:34px;height:34px;font-size:18px}
+body.chats-mode .chats-heading h2{font-size:21px}
+body.chats-mode .chats-heading button{font-size:20px;width:30px;height:32px}
+body.chats-mode .chats-search{height:42px;gap:10px;padding:0 14px;margin:7px 0 11px;border-radius:24px}
+body.chats-mode .chats-search span{font-size:23px}
+body.chats-mode .chats-search input{font-size:13px}
+body.chats-mode .chat-tabs{height:40px;padding:3px;border-radius:23px;margin-bottom:8px;gap:3px}
+body.chats-mode .chat-tab{height:34px;font-size:12px}
+body.chats-mode .chat-tab span{min-width:16px;height:16px;font-size:9px;padding:0 3px}
+body.chats-mode .chat-list{padding-bottom:5px}
+body.chats-mode .chat-row{min-height:76px;padding:8px 2px;gap:10px}
+body.chats-mode .chat-row .avatar{width:48px;height:48px;flex:0 0 48px;font-size:19px}
+body.chats-mode .chat-name{font-size:13px}
+body.chats-mode .chat-time{font-size:10px;padding-top:2px}
+body.chats-mode .chat-preview{font-size:11px;margin-top:5px}
+body.chats-mode .chats-fab{width:42px;height:42px;right:18px;bottom:64px;font-size:22px}
+body.chats-mode .empty-state{padding:30px 14px;font-size:12px}
+@media(min-width:621px){body.chats-mode .chats-page{max-width:650px;margin:auto}}
