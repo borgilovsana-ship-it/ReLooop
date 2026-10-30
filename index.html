@@ -60,9 +60,29 @@
         </div>
       </section>
 
-      <section class="screen" id="settings-screen" aria-label="Настройки">
-        <div class="page-content"><h2>Настройки</h2>
-          <div class="settings-card"><h3>Аккаунт</h3><p class="muted" id="account-email">Загрузка аккаунта…</p><p class="muted" id="account-username"></p><button class="primary-button" id="sign-out" type="button">Выйти из аккаунта</button><p class="muted">Вход и регистрация подключены. Чаты пока остаются демоверсией; следующим шагом подключим реальные сообщения.</p></div>
+      <section class="screen settings-screen" id="settings-screen" aria-label="Настройки">
+        <div class="settings-page">
+          <header class="settings-topline">
+            <div class="settings-mini-logo">R<span>:</span></div>
+            <div class="settings-top-actions"><button type="button" aria-label="Поиск" id="settings-search">⌕</button><button type="button" aria-label="Дополнительно" id="settings-more">⋮</button></div>
+          </header>
+          <div class="settings-profile">
+            <div class="settings-avatar" id="settings-avatar">R</div>
+            <h2 id="settings-display-name">Мой профиль</h2>
+            <p id="settings-account-line">ReLooop</p>
+          </div>
+          <div class="settings-list">
+            <button class="settings-row" type="button" data-setting="account"><span class="settings-icon account-icon">♙</span><span><strong>Аккаунт</strong><small>Номер, имя пользователя, «О себе»</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="chats"><span class="settings-icon chats-icon">☰</span><span><strong>Настройки чатов</strong><small>Обои, ночной режим, анимации</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="privacy"><span class="settings-icon privacy-icon">⚿</span><span><strong>Конфиденциальность</strong><small>Время захода, устройства, ключи доступа</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="notifications"><span class="settings-icon notifications-icon">◖</span><span><strong>Уведомления</strong><small>Звуки, звонки, счётчик сообщений</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="storage"><span class="settings-icon storage-icon">◧</span><span><strong>Данные и память</strong><small>Настройки загрузки медиафайлов</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="folders"><span class="settings-icon folders-icon">▰</span><span><strong>Папки с чатами</strong><small>Сортировка чатов по папкам</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="devices"><span class="settings-icon devices-icon">▣</span><span><strong>Устройства</strong><small>Управление активными сеансами</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="battery"><span class="settings-icon battery-icon">▱</span><span><strong>Энергосбережение</strong><small>Экономия энергии при низком заряде</small></span><b>›</b></button>
+            <button class="settings-row" type="button" data-setting="language"><span class="settings-icon language-icon">◎</span><span><strong>Язык</strong><small>Русский</small></span><b>›</b></button>
+            <div class="settings-account-footer"><p id="account-email">Загрузка аккаунта…</p><p id="account-username"></p><button class="settings-logout" id="sign-out" type="button">Выйти из аккаунта</button></div>
+          </div>
         </div>
       </section>
 
