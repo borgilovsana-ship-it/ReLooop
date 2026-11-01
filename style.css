@@ -301,3 +301,6 @@ body.profile-mode .profile-username-handle{font-size:11px;margin-bottom:7px}
 /* Verified badge for the @vip account */
 .verified-badge{display:inline-grid;place-items:center;width:15px;height:15px;margin-left:5px;border-radius:50%;background:#2698e8;color:#fff;font-size:10px;font-weight:900;line-height:1;vertical-align:middle;box-shadow:0 0 0 2px #fff}
 .verified-badge[hidden]{display:none}
+
+/* Галочка подтверждения стоит рядом с отображаемым именем профиля. */
+.profile-hero h2 .verified-badge{width:17px;height:17px;margin-left:7px;font-size:11px;vertical-align:middle;box-shadow:none}
