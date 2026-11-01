@@ -297,3 +297,7 @@ body.profile-mode .username-cooldown{font-size:10px}
 .profile-username-handle{margin:0 0 9px;color:#258fc5;font-size:14px;font-weight:600;letter-spacing:.1px}
 body.profile-mode .profile-hero h2{margin-bottom:4px}
 body.profile-mode .profile-username-handle{font-size:11px;margin-bottom:7px}
+
+/* Verified badge for the @vip account */
+.verified-badge{display:inline-grid;place-items:center;width:15px;height:15px;margin-left:5px;border-radius:50%;background:#2698e8;color:#fff;font-size:10px;font-weight:900;line-height:1;vertical-align:middle;box-shadow:0 0 0 2px #fff}
+.verified-badge[hidden]{display:none}
