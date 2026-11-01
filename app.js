@@ -141,7 +141,7 @@ function showAuthenticatedApp(){
   updateUsernameCooldown();
 
   try{const photo=localStorage.getItem("relooop-profile-photo");if(photo) $("profile-avatar").style.backgroundImage="url("+photo+")";}catch(error){}
-  $("profile-heading").textContent=currentProfile?.display_name||currentProfile?.username||"Мой профиль";
+  $("profile-heading-text").textContent=currentProfile?.display_name||currentProfile?.username||"Мой профиль";
   $("profile-username-text").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
   $("profile-verified-badge").hidden=(currentProfile?.username||"").toLowerCase()!=="vip";
   $("settings-username-hint").textContent=currentProfile?.username?"@"+currentProfile.username+" · изменить":"Изменить имя пользователя";
@@ -251,7 +251,7 @@ async function saveDisplayName(){
   button.disabled=false;button.textContent="Сохранить имя";
   if(error){alert("Не удалось сохранить имя: "+authErrorMessage(error));return;}
   currentProfile=data;
-  $("profile-heading").textContent=data.display_name||data.username;
+  $("profile-heading-text").textContent=data.display_name||data.username;
   $("settings-display-name").textContent=data.display_name||data.username;
   $("settings-display-name-hint").textContent=data.display_name||"Имя, которое увидят другие";
   $("profile-avatar").textContent=Array.from(data.display_name||data.username||"R")[0].toUpperCase();
@@ -288,7 +288,7 @@ async function saveUsername(){
   currentProfile=data;
   $("username-input").value=data.username;
   $("profile-detail-username").textContent="@"+data.username;
-  $("profile-heading").textContent=data.username;
+  $("profile-heading-text").textContent=data.display_name||data.username;
   $("profile-username-handle").textContent="@"+data.username;
   $("settings-username-hint").textContent="@"+data.username+" · изменить";
   $("settings-display-name").textContent=data.username;
