@@ -108,7 +108,7 @@ function authErrorMessage(error){
 }
 async function ensureProfile(preferredUsername=""){
   if(!currentUser) return;
-  const {data:existing,error:selectError}=await supabaseClient.from("profiles").select("id,username,username_changed_at").eq("id",currentUser.id).maybeSingle();
+  const {data:existing,error:selectError}=await supabaseClient.from("profiles").select("id,username,display_name,username_changed_at").eq("id",currentUser.id).maybeSingle();
   if(selectError) throw selectError;
   if(existing){currentProfile=existing;return;}
   const metadata=currentUser.user_metadata||{};
@@ -130,16 +130,18 @@ function showAuthenticatedApp(){
   $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
   $("account-username").textContent=currentProfile?.username?"Имя пользователя: @"+currentProfile.username:"";
   $("profile-detail-email").textContent=currentUser?.email||"—";
-  $("settings-display-name").textContent=currentProfile?.username||"Мой профиль";
+  $("settings-display-name").textContent=currentProfile?.display_name||currentProfile?.username||"Мой профиль";
   $("settings-account-line").textContent=(currentUser?.email||"")+(currentProfile?.username?" • @"+currentProfile.username:"");
   $("settings-avatar").textContent=currentProfile?.username?Array.from(currentProfile.username)[0].toUpperCase():"R";
   try{const photo=localStorage.getItem("relooop-profile-photo");if(photo){$("settings-avatar").style.backgroundImage="url("+photo+")";$("settings-avatar").textContent="";}}catch(error){}
   $("profile-detail-username").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
   $("username-input").value=currentProfile?.username||"";
+  $("display-name-input").value=currentProfile?.display_name||"";
+  $("settings-display-name-hint").textContent=currentProfile?.display_name||"Имя, которое увидят другие";
   updateUsernameCooldown();
 
   try{const photo=localStorage.getItem("relooop-profile-photo");if(photo) $("profile-avatar").style.backgroundImage="url("+photo+")";}catch(error){}
-  $("profile-heading").textContent=currentProfile?.username||"Мой профиль";
+  $("profile-heading").textContent=currentProfile?.display_name||currentProfile?.username||"Мой профиль";
   $("profile-username-handle").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
   $("settings-username-hint").textContent=currentProfile?.username?"@"+currentProfile.username+" · изменить":"Изменить имя пользователя";
   if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(currentProfile?.username||"R")[0].toUpperCase();
@@ -239,6 +241,23 @@ function updateUsernameCooldown(){
     button.textContent="Сохранить имя пользователя";
   }
 }
+async function saveDisplayName(){
+  const displayName=$("display-name-input").value.trim();
+  if(!displayName){alert("Напиши, как тебя называть.");return;}
+  if(displayName.length>32){alert("Имя должно быть не длиннее 32 символов.");return;}
+  const button=$("save-display-name");button.disabled=true;button.textContent="Сохраняем…";
+  const {data,error}=await supabaseClient.from("profiles").update({display_name:displayName}).eq("id",currentUser.id).select("id,username,display_name,username_changed_at").single();
+  button.disabled=false;button.textContent="Сохранить имя";
+  if(error){alert("Не удалось сохранить имя: "+authErrorMessage(error));return;}
+  currentProfile=data;
+  $("profile-heading").textContent=data.display_name||data.username;
+  $("settings-display-name").textContent=data.display_name||data.username;
+  $("settings-display-name-hint").textContent=data.display_name||"Имя, которое увидят другие";
+  $("profile-avatar").textContent=Array.from(data.display_name||data.username||"R")[0].toUpperCase();
+  $("settings-avatar").textContent=Array.from(data.display_name||data.username||"R")[0].toUpperCase();
+  $("settings-account-line").textContent=(currentUser?.email||"")+(data.username?" • @"+data.username:"");
+  alert("Имя сохранено!");
+}
 async function saveUsername(){
   const username=$("username-input").value.trim().toLowerCase();
   if(!/^[a-z0-9_]{3,24}$/.test(username)){
@@ -292,6 +311,7 @@ $("new-chat").addEventListener("click",createChat);
 $("back-to-chats").addEventListener("click",backToChats);
 
 $("save-username").addEventListener("click",saveUsername);
+$("save-display-name").addEventListener("click",saveDisplayName);
 $("choose-photo").addEventListener("click",()=>$("profile-photo-input").click());
 $("profile-photo-input").addEventListener("change",event=>{
   const file=event.target.files?.[0];if(!file)return;
@@ -333,7 +353,8 @@ $("settings-search").addEventListener("click",()=>{showScreen("chats-screen");$(
 $("settings-more").addEventListener("click",()=>alert("Дополнительные настройки ReLooop появятся позже."));
 document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("click",()=>{
   const key=row.dataset.setting;
-  if(key==="account"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("username-input").focus();return;}
+  if(key==="display-name"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("display-name-input").focus();return;}
+  if(key==="username"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("username-input").focus();return;}
   const messages={chats:"Настройки оформления чатов скоро появятся.",privacy:"Настройки конфиденциальности скоро появятся.",notifications:"Настройки уведомлений скоро появятся.",storage:"Управление памятью скоро появится.",folders:"Папки чатов скоро появятся.",devices:"Управление устройствами скоро появится.",battery:"Энергосбережение скоро появится.",language:"Сейчас доступен русский язык."};
   alert(messages[key]||"Этот раздел скоро появится.");
 }));
