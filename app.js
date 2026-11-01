@@ -127,7 +127,10 @@ async function showAuthenticatedApp(){
   $("settings-username-hint").textContent=currentProfile?.username?"@"+currentProfile.username+" · изменить":"Изменить имя пользователя";
   if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(currentProfile?.username||"R")[0].toUpperCase();
   document.body.classList.add("chats-mode");
-  renderChats();
+  $("conversation-status").textContent="Личная переписка";
+  $("demo-notice").hidden=true;
+  await loadConversations();
+  subscribeToMessages();
 }
 async function handleSignOut(){
   const {error}=await supabaseClient.auth.signOut();
