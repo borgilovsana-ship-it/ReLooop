@@ -142,7 +142,8 @@ function showAuthenticatedApp(){
 
   try{const photo=localStorage.getItem("relooop-profile-photo");if(photo) $("profile-avatar").style.backgroundImage="url("+photo+")";}catch(error){}
   $("profile-heading").textContent=currentProfile?.display_name||currentProfile?.username||"Мой профиль";
-  $("profile-username-handle").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
+  $("profile-username-text").textContent=currentProfile?.username?"@"+currentProfile.username:"@username";
+  $("profile-verified-badge").hidden=(currentProfile?.username||"").toLowerCase()!=="vip";
   $("settings-username-hint").textContent=currentProfile?.username?"@"+currentProfile.username+" · изменить":"Изменить имя пользователя";
   if(!$("profile-avatar").style.backgroundImage)$("profile-avatar").textContent=Array.from(currentProfile?.username||"R")[0].toUpperCase();
   document.body.classList.add("chats-mode");
