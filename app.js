@@ -6,41 +6,21 @@ const SUPABASE_URL = "https://vhnwoatkwzmgfcusiiga.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_a2FiQH6N-IBgadyNL04CCA_HDxWqW_E";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-const starterChats = [
-  {id:"welcome",name:"ReLooop",avatar:"R",color:"#318bd1",preview:"Добро пожаловать в ReLooop!",messages:[
-    {text:"Привет! 👋",mine:false,time:"12:00"},
-    {text:"Добро пожаловать в ReLooop!",mine:false,time:"12:00"},
-    {text:"Это первая версия твоего собственного мессенджера.",mine:false,time:"12:00"}
-  ]},
-  {id:"saved",name:"Избранное",avatar:"★",color:"#8066c9",preview:"Твои сохранённые сообщения",messages:[]},
-  {id:"notes",name:"Мои заметки",avatar:"✎",color:"#249d91",preview:"Записывай идеи здесь",messages:[]}
-];
-let chats = starterChats.map(chat=>({...chat,messages:chat.messages.map(message=>({...message}))}));
+let chats = [];
 let currentChatId = null;
 let currentScreen = "chats-screen";
 let authMode = "login";
 let currentUser = null;
 let currentProfile = null;
 let appInitPromise = null;
+let messagesChannel = null;
 async function openUserApp(user){
   currentUser=user;
   if(appInitPromise) return appInitPromise;
-  appInitPromise=(async()=>{await ensureProfile();showAuthenticatedApp();})();
+  appInitPromise=(async()=>{await ensureProfile();await showAuthenticatedApp();})();
   try{await appInitPromise;}finally{appInitPromise=null;}
 }
 
-try {
-  const saved = JSON.parse(localStorage.getItem("relooop-demo-v1") || "null");
-  if(saved && Array.isArray(saved.chats)) chats = saved.chats;
-
-} catch (error) {
-  console.warn("Не удалось загрузить локальные демо-данные.", error);
-}
-
-function persistDemo(){
-  try { localStorage.setItem("relooop-demo-v1",JSON.stringify({chats})); }
-  catch(error) { console.warn("Браузер не разрешил сохранить демо-данные.",error); }
-}
 function escapeHTML(value){
   return String(value ?? "").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
@@ -125,7 +105,7 @@ async function ensureProfile(preferredUsername=""){
   }
   throw new Error("Не удалось создать профиль. Попробуй войти ещё раз.");
 }
-function showAuthenticatedApp(){
+async function showAuthenticatedApp(){
   $("auth-screen").hidden=true;$("app-content").hidden=false;
   $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
   $("account-username").textContent=currentProfile?.username?"Имя пользователя: @"+currentProfile.username:"";
@@ -159,20 +139,56 @@ async function handleSignOut(){
 function renderChats(){
   const query=$("search").value.trim().toLocaleLowerCase("ru");
   const list=$("chat-list");list.replaceChildren();
-  const visible=chats.filter(chat=>chat.name.toLocaleLowerCase("ru").includes(query)||(chat.preview||"").toLocaleLowerCase("ru").includes(query));
+  const visible=chats.filter(chat=>chat.name.toLocaleLowerCase("ru").includes(query)||chat.username.toLocaleLowerCase("ru").includes(query)||(chat.preview||"").toLocaleLowerCase("ru").includes(query));
   $("chat-count").textContent=String(chats.length);
-  if(!visible.length){const empty=document.createElement("div");empty.className="empty-state";empty.textContent="Чаты не найдены";list.appendChild(empty);return;}
+  if(!visible.length){const empty=document.createElement("div");empty.className="empty-state";empty.textContent=query?"Чаты не найдены":"Пока нет переписок. Нажми ✎ и найди человека по @логину.";list.appendChild(empty);return;}
   visible.forEach(chat=>{
     const button=document.createElement("button");button.className="chat-row";button.type="button";
     const avatar=document.createElement("div");avatar.className="avatar";avatar.style.background=validColor(chat.color);avatar.textContent=chat.avatar;
     const info=document.createElement("div");info.className="chat-info";
     const titleLine=document.createElement("div");titleLine.className="chat-title-line";
     const title=document.createElement("span");title.className="chat-name";title.textContent=chat.name;
-    const time=document.createElement("span");time.className="chat-time";time.textContent=chat.messages.length?(chat.messages[chat.messages.length-1].time||""):"";
+    const time=document.createElement("span");time.className="chat-time";time.textContent=chat.time||"";
     titleLine.append(title,time);
-    const preview=document.createElement("div");preview.className="chat-preview";preview.textContent=chat.preview||"Нет сообщений";
+    const preview=document.createElement("div");preview.className="chat-preview";preview.textContent=chat.preview||"Написать сообщение";
     info.append(titleLine,preview);button.append(avatar,info);button.addEventListener("click",()=>openChat(chat.id));list.appendChild(button);
   });
+}
+async function loadConversations(){
+  if(!currentUser)return;
+  const {data:rows,error}=await supabaseClient.from("messages").select("id,sender_id,recipient_id,content,created_at").or("sender_id.eq."+currentUser.id+",recipient_id.eq."+currentUser.id).order("created_at",{ascending:false});
+  if(error)throw error;
+  const latestByPeer=new Map();
+  (rows||[]).forEach(row=>{
+    const peerId=row.sender_id===currentUser.id?row.recipient_id:row.sender_id;
+    if(!latestByPeer.has(peerId))latestByPeer.set(peerId,row);
+  });
+  const peerIds=[...latestByPeer.keys()];
+  let profiles=[];
+  if(peerIds.length){
+    const result=await supabaseClient.from("profiles").select("id,username,display_name").in("id",peerIds);
+    if(result.error)throw result.error;
+    profiles=result.data||[];
+  }
+  const profileMap=new Map(profiles.map(profile=>[profile.id,profile]));
+  chats=peerIds.map(id=>{
+    const profile=profileMap.get(id)||{username:"user",display_name:"Пользователь"};
+    const last=latestByPeer.get(id);
+    return {id,name:profile.display_name||profile.username,username:profile.username||"",avatar:Array.from(profile.display_name||profile.username||"R")[0].toUpperCase(),color:"#477da8",preview:(last.sender_id===currentUser.id?"Вы: ":"")+last.content,time:new Date(last.created_at).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})};
+  });
+  renderChats();
+}
+function subscribeToMessages(){
+  if(messagesChannel)supabaseClient.removeChannel(messagesChannel);
+  messagesChannel=supabaseClient.channel("private-messages-"+currentUser.id)
+    .on("postgres_changes",{event:"INSERT",schema:"public",table:"messages"},payload=>{
+      const row=payload.new;
+      if(row.sender_id!==currentUser.id&&row.recipient_id!==currentUser.id)return;
+      loadConversations().catch(error=>console.error("Не удалось обновить чаты",error));
+      if(currentChatId&&(row.sender_id===currentChatId||row.recipient_id===currentChatId)){
+        loadConversationMessages(currentChatId).catch(error=>console.error("Не удалось обновить сообщения",error));
+      }
+    }).subscribe();
 }
 function showScreen(screenId){
   currentScreen=screenId;closeConversation();
@@ -184,46 +200,67 @@ function showScreen(screenId){
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
 }
-function openChat(id){
-  const chat=chats.find(item=>item.id===id);if(!chat)return;
+async function openChat(id){
+  const chat=chats.find(item=>item.id===id);
+  if(!chat)return;
   currentChatId=id;
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.remove("active"));
   $("topbar").hidden=true;$("bottom-nav").hidden=true;
   $("conversation").classList.add("active");
-  $("conversation-name").textContent=chat.name;$("conversation-avatar").textContent=chat.avatar;
+  $("conversation-name").textContent=chat.name;
+  $("conversation-avatar").textContent=chat.avatar;
   $("conversation-avatar").style.background=validColor(chat.color);
-  renderMessages();$("message-input").focus();
+  $("conversation-status").textContent="@"+chat.username;
+  $("demo-notice").hidden=true;
+  await loadConversationMessages(id);
+  $("message-input").focus();
 }
 function closeConversation(){
   $("conversation").classList.remove("active");
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
 }
-function backToChats(){showScreen("chats-screen");}
-function renderMessages(){
-  const chat=chats.find(item=>item.id===currentChatId);if(!chat)return;
+function backToChats(){currentChatId=null;showScreen("chats-screen");}
+async function loadConversationMessages(peerId){
+  if(!currentUser)return;
+  const {data,error}=await supabaseClient.from("messages").select("id,sender_id,recipient_id,content,created_at").or("and(sender_id.eq."+currentUser.id+",recipient_id.eq."+peerId+"),and(sender_id.eq."+peerId+",recipient_id.eq."+currentUser.id+")").order("created_at",{ascending:true});
+  if(error)throw error;
   const box=$("messages");box.replaceChildren();
-  chat.messages.forEach(message=>{
-    const bubble=document.createElement("div");bubble.className="message-bubble"+(message.mine?" mine":"");
-    bubble.append(document.createTextNode(message.text));
-    const meta=document.createElement("small");meta.className="message-meta";meta.textContent=(message.time||"")+(message.mine?" ✓":"");
+  (data||[]).forEach(message=>{
+    const bubble=document.createElement("div");bubble.className="message-bubble"+(message.sender_id===currentUser.id?" mine":"");
+    bubble.append(document.createTextNode(message.content));
+    const meta=document.createElement("small");meta.className="message-meta";meta.textContent=new Date(message.created_at).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})+(message.sender_id===currentUser.id?" ✓":"");
     bubble.appendChild(meta);box.appendChild(bubble);
   });
   box.scrollTop=box.scrollHeight;
 }
-function sendMessage(event){
-  event.preventDefault();const input=$("message-input");const text=input.value.trim();
-  if(!text||!currentChatId)return;
-  const chat=chats.find(item=>item.id===currentChatId);if(!chat)return;
-  const time=new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
-  chat.messages.push({text,mine:true,time});chat.preview="Вы: "+text;
-  input.value="";persistDemo();renderMessages();renderChats();
+async function sendMessage(event){
+  event.preventDefault();
+  const input=$("message-input");const content=input.value.trim();
+  if(!content||!currentChatId||!currentUser)return;
+  const send=$("message-form").querySelector("button");
+  send.disabled=true;
+  try{
+    const {error}=await supabaseClient.from("messages").insert({sender_id:currentUser.id,recipient_id:currentChatId,content});
+    if(error)throw error;
+    input.value="";
+    await Promise.all([loadConversationMessages(currentChatId),loadConversations()]);
+  }catch(error){alert("Не удалось отправить сообщение: "+authErrorMessage(error));}
+  finally{send.disabled=false;input.focus();}
 }
-function createChat(){
-  const answer=prompt("Как назвать новый демо-чат?");
+async function createChat(){
+  const answer=prompt("Введи имя пользователя, например @alex:");
   if(!answer||!answer.trim())return;
-  const name=answer.trim().slice(0,40);
-  const chat={id:"local-"+Date.now(),name,avatar:Array.from(name)[0].toUpperCase(),color:"#477da8",preview:"Новый демо-чат",messages:[]};
-  chats.unshift(chat);persistDemo();$("search").value="";showScreen("chats-screen");renderChats();openChat(chat.id);
+  const username=answer.trim().replace(/^@/,"").toLowerCase();
+  if(username===currentProfile?.username?.toLowerCase()){alert("Это твой собственный аккаунт.");return;}
+  const {data:profile,error}=await supabaseClient.from("profiles").select("id,username,display_name").eq("username",username).maybeSingle();
+  if(error){alert("Не удалось найти пользователя: "+authErrorMessage(error));return;}
+  if(!profile){alert("Пользователь @"+username+" не найден.");return;}
+  let chat=chats.find(item=>item.id===profile.id);
+  if(!chat){
+    chat={id:profile.id,name:profile.display_name||profile.username,username:profile.username,avatar:Array.from(profile.display_name||profile.username||"R")[0].toUpperCase(),color:"#477da8",preview:"Новая переписка",time:""};
+    chats.unshift(chat);
+  }
+  $("search").value="";renderChats();openChat(profile.id);
 }
 function updateUsernameCooldown(){
   const changedAt=currentProfile?.username_changed_at?new Date(currentProfile.username_changed_at):null;
