@@ -553,6 +553,17 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
 // This avoids depending on the timing of INITIAL_SESSION in mobile browsers.
 restoreSavedSession();
 
+// Ensure the login form is actually wired to the authentication handler.
+const authForm=$("auth-form");
+if(authForm){
+  authForm.addEventListener("submit",handleAuth);
+  $("auth-submit").addEventListener("click",event=>{
+    if(authForm.requestSubmit) {
+      // Native form submission will invoke the submit handler exactly once.
+      if(event.currentTarget.type!=="submit") authForm.requestSubmit();
+    }
+  });
+}
 $("settings-search").addEventListener("click",()=>{showScreen("chats-screen");$("search").focus();});
 $("settings-more").addEventListener("click",()=>alert("Дополнительные настройки ReLooop появятся позже."));
 document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("click",()=>{
