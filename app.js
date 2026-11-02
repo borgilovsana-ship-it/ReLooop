@@ -4,7 +4,15 @@ const $ = (id) => document.getElementById(id);
 // never put a service_role or secret key in frontend code.
 const SUPABASE_URL = "https://vhnwoatkwzmgfcusiiga.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_a2FiQH6N-IBgadyNL04CCA_HDxWqW_E";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: window.localStorage,
+    storageKey: "sb-vhnwoatkwzmgfcusiiga-auth-token"
+  }
+});
 
 let chats = [];
 let currentChatId = null;
@@ -13,12 +21,24 @@ let authMode = "login";
 let currentUser = null;
 let currentProfile = null;
 let appInitPromise = null;
+let appInitUserId = null;
+let authBootstrapped = false;
 let messagesChannel = null;
 async function openUserApp(user){
+  if(!user?.id) throw new Error("Не удалось определить аккаунт. Войди ещё раз.");
+  if(appInitPromise && appInitUserId===user.id) return appInitPromise;
   currentUser=user;
-  if(appInitPromise) return appInitPromise;
-  appInitPromise=(async()=>{await ensureProfile();await showAuthenticatedApp();})();
-  try{await appInitPromise;}finally{appInitPromise=null;}
+  appInitUserId=user.id;
+  appInitPromise=(async()=>{
+    await ensureProfile();
+    await showAuthenticatedApp();
+  })();
+  try{
+    await appInitPromise;
+  }finally{
+    appInitPromise=null;
+    appInitUserId=null;
+  }
 }
 
 function escapeHTML(value){
@@ -487,14 +507,51 @@ $("gift-catalog").addEventListener("click",event=>{
 });
 $("profile-add").addEventListener("click",()=>alert("Раздел публикаций пока в разработке."));
 setAuthMode("login");
+function showLoginScreen(message="",isError=false){
+  $("app-content").hidden=true;
+  $("auth-screen").hidden=false;
+  if(message)setAuthMessage(message,isError);
+}
+async function restoreSavedSession(){
+  try{
+    const {data,error}=await supabaseClient.auth.getSession();
+    if(error) throw error;
+    authBootstrapped=true;
+    if(data.session?.user){
+      await openUserApp(data.session.user);
+    }else{
+      showLoginScreen();
+    }
+  }catch(error){
+    authBootstrapped=true;
+    showLoginScreen("Не удалось восстановить вход: "+authErrorMessage(error),true);
+    console.error("restoreSavedSession:",error);
+  }
+}
 supabaseClient.auth.onAuthStateChange((event,session)=>{
-  if(event==="SIGNED_OUT"){currentUser=null;currentProfile=null;$("app-content").hidden=true;$("auth-screen").hidden=false;return;}
+  if(event==="SIGNED_OUT"){
+    currentUser=null;currentProfile=null;chats=[];ownedGiftIds=new Set();
+    if(messagesChannel){supabaseClient.removeChannel(messagesChannel);messagesChannel=null;}
+    showLoginScreen();
+    return;
+  }
   if(session?.user){
-    currentUser=session.user;
-    // Avoid making Supabase calls directly inside the auth callback.
-    setTimeout(async()=>{try{await openUserApp(session.user);}catch(error){$("auth-screen").hidden=false;$("app-content").hidden=true;setAuthMessage("Вход выполнен, но не удалось загрузить профиль: "+authErrorMessage(error),true);}},0);
+    // Let Supabase finish its auth event before loading profile/database data.
+    setTimeout(async()=>{
+      try{await openUserApp(session.user);}
+      catch(error){
+        showLoginScreen("Сессия найдена, но приложение не смогло загрузить аккаунт: "+authErrorMessage(error),true);
+        console.error("openUserApp:",error);
+      }
+    },0);
+  }else if(event==="INITIAL_SESSION"){
+    authBootstrapped=true;
+    showLoginScreen();
   }
 });
+// Explicitly read the persisted session as well as listening for auth events.
+// This avoids depending on the timing of INITIAL_SESSION in mobile browsers.
+restoreSavedSession();
 
 $("settings-search").addEventListener("click",()=>{showScreen("chats-screen");$("search").focus();});
 $("settings-more").addEventListener("click",()=>alert("Дополнительные настройки ReLooop появятся позже."));
