@@ -283,7 +283,7 @@ function showScreen(screenId){
   document.body.classList.toggle("chats-mode",screenId==="chats-screen");
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===screenId));
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
-  $("topbar").hidden=false;$("bottom-nav").hidden=false;
+  $("premium-screen").hidden=true;\n  $("topbar").hidden=false;$("bottom-nav").hidden=false;
 }
 async function openChat(id){
   const chat=chats.find(item=>item.id===id);
@@ -304,6 +304,19 @@ function closeConversation(){
   $("conversation").classList.remove("active");
   $("topbar").hidden=false;$("bottom-nav").hidden=false;
 }
+function openPremium(){
+  closeConversation();
+  document.querySelectorAll(".screen").forEach(screen=>screen.classList.remove("active"));
+  $("premium-screen").hidden=false;
+  $("topbar").hidden=true;$("bottom-nav").hidden=true;
+  document.body.classList.remove("profile-mode","settings-mode","contacts-mode","chats-mode");
+  currentScreen="premium-screen";
+}
+$("premium-back").addEventListener("click",()=>showScreen("settings-screen"));
+document.querySelectorAll(".premium-plan").forEach(plan=>plan.addEventListener("click",()=>{
+  document.querySelectorAll(".premium-plan").forEach(item=>item.classList.toggle("selected",item===plan));
+}));
+$("premium-join").addEventListener("click",()=>alert("ReLooop Premium пока в разработке. Подписка и оплата ещё не подключены."));
 function backToChats(){currentChatId=null;showScreen("chats-screen");}
 async function loadConversationMessages(peerId){
   if(!currentUser)return;
