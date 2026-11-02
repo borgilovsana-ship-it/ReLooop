@@ -336,3 +336,17 @@ body.profile-mode .gift-card strong{font-size:11px}
 body.profile-mode .gift-rarity{font-size:9px;margin:3px 0 7px}
 body.profile-mode .gift-claim-button{min-height:27px;font-size:10px;border-radius:9px}
 body.profile-mode .gift-empty{font-size:10px;padding:14px 9px}
+
+/* Additional settings groups inspired by the reference layout */
+.settings-extra-list{margin-top:14px;padding:5px 0;border-radius:26px}
+.settings-help-title{padding:22px 20px 10px;color:#4c9bc9;font-size:16px;font-weight:750}
+.premium-icon{background:linear-gradient(135deg,#a84ee8,#5479ef)}
+.stars-icon{background:linear-gradient(135deg,#ffbd20,#ee820e)}
+.business-icon{background:linear-gradient(135deg,#ff6c83,#d8325b)}
+.send-gift-icon{background:linear-gradient(135deg,#ff9b36,#e96c19)}
+.help-chat-icon{background:linear-gradient(135deg,#ffc02b,#e99a08)}
+.faq-icon{background:linear-gradient(135deg,#27b6ee,#168bd1)}
+.features-icon{background:linear-gradient(135deg,#c66ae9,#8f48d0)}
+.policy-icon{background:linear-gradient(135deg,#55d66b,#20a84b)}
+body.settings-mode .settings-extra-list{margin-top:12px}
+body.settings-mode .settings-help-title{padding:17px 16px 8px;font-size:14px}
