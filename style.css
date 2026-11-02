@@ -304,3 +304,35 @@ body.profile-mode .profile-username-handle{font-size:11px;margin-bottom:7px}
 
 /* Галочка подтверждения стоит рядом с отображаемым именем профиля. */
 .profile-hero h2 .verified-badge{width:17px;height:17px;margin-left:7px;font-size:11px;vertical-align:middle;box-shadow:none}
+
+
+/* Gift collection and free starter catalog */
+.profile-gifts-panel{margin:8px 0 24px;text-align:left}
+.gift-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 4px 5px}
+.gift-section-heading h3{font-size:18px;margin:0;font-weight:800;color:#242a31}
+.gift-section-heading>span{font-size:12px;font-weight:750;color:#258fc5;background:#e6f3fc;border-radius:20px;padding:6px 10px;white-space:nowrap}
+.gift-section-note{font-size:12px;color:#858990;margin:0 4px 12px;line-height:1.45}
+.gift-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.gift-card{min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:12px 8px 10px;border:1px solid #e7e9ee;border-radius:17px;background:#fff;box-shadow:0 2px 8px #00000008}
+.gift-visual{width:64px;height:64px;display:grid;place-items:center;border-radius:18px;background:#f3f5f8;font-size:37px;margin-bottom:8px}
+.gift-card strong{font-size:13px;color:#272c33}
+.gift-rarity{font-size:10px;color:#858990;margin:4px 0 9px}
+.rarity-common .gift-visual{background:#f0f2f5}
+.rarity-rare .gift-visual{background:#e8f4ff}
+.rarity-epic .gift-visual{background:#f2eaff}
+.rarity-legendary .gift-visual{background:#fff1db}
+.gift-claim-button{width:100%;min-height:31px;border:0;border-radius:11px;background:#2698e8;color:#fff;font-size:11px;font-weight:750;padding:6px}
+.gift-claim-button:disabled{background:#e8f2f8;color:#398fc0}
+.gift-catalog-heading{margin-top:22px}
+.gift-empty{grid-column:1/-1;text-align:center;color:#858990;font-size:12px;line-height:1.45;padding:18px 12px;border:1px dashed #d8dde4;border-radius:15px;margin:0}
+.gift-status{min-height:18px;text-align:center;color:#258fc5;font-size:12px;font-weight:650;margin:10px 0 0}
+@media(min-width:480px){.gift-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+body.profile-mode .gift-section-heading h3{font-size:15px}
+body.profile-mode .gift-section-note{font-size:10px;margin-bottom:9px}
+body.profile-mode .gift-grid{gap:7px}
+body.profile-mode .gift-card{padding:9px 6px 8px;border-radius:14px}
+body.profile-mode .gift-visual{width:52px;height:52px;font-size:30px;border-radius:14px}
+body.profile-mode .gift-card strong{font-size:11px}
+body.profile-mode .gift-rarity{font-size:9px;margin:3px 0 7px}
+body.profile-mode .gift-claim-button{min-height:27px;font-size:10px;border-radius:9px}
+body.profile-mode .gift-empty{font-size:10px;padding:14px 9px}
