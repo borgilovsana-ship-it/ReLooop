@@ -340,7 +340,26 @@ function openPremium(){
   document.body.classList.remove("profile-mode","settings-mode","contacts-mode","chats-mode");
   currentScreen="premium-screen";
 }
+function openStars(){
+  closeConversation();
+  $("premium-screen").hidden=true;
+  document.querySelectorAll(".screen").forEach(screen=>screen.classList.remove("active"));
+  $("stars-screen").hidden=false;
+  $("topbar").hidden=true;$("bottom-nav").hidden=true;
+  document.body.classList.remove("profile-mode","settings-mode","contacts-mode","chats-mode");
+  currentScreen="stars-screen";
+}
 $("premium-back").addEventListener("click",()=>showScreen("settings-screen"));
+$("stars-back").addEventListener("click",()=>showScreen("settings-screen"));
+$("stars-topup").addEventListener("click",()=>alert("Пополнение звёзд появится позже. Сейчас платежи не подключены."));
+$("stars-statistics").addEventListener("click",()=>alert("Пока операций нет. Статистика появится вместе с историей звёзд."));
+$("stars-gift-friends").addEventListener("click",()=>alert("Передача звёзд друзьям появится позже."));
+$("stars-earn").addEventListener("click",()=>alert("Заработок звёзд пока в разработке."));
+document.querySelectorAll("[data-stars-tab]").forEach(tab=>tab.addEventListener("click",()=>{
+  document.querySelectorAll("[data-stars-tab]").forEach(item=>item.classList.toggle("active",item===tab));
+  const messages={all:"Операций пока нет",earned:"Начислений пока нет",spent:"Списаний пока нет"};
+  $("stars-history-empty").querySelector("strong").textContent=messages[tab.dataset.starsTab];
+}));
 document.querySelectorAll(".premium-plan").forEach(plan=>plan.addEventListener("click",()=>{
   document.querySelectorAll(".premium-plan").forEach(item=>item.classList.toggle("selected",item===plan));
 }));
@@ -586,7 +605,8 @@ document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("c
   if(key==="display-name"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("display-name-input").focus();return;}
   if(key==="username"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("username-input").focus();return;}
   if(key==="premium"){openPremium();return;}
-  const messages={chats:"Настройки оформления чатов скоро появятся.",privacy:"Настройки конфиденциальности скоро появятся.",notifications:"Настройки уведомлений скоро появятся.",storage:"Управление памятью скоро появится.",folders:"Папки чатов скоро появятся.",devices:"Управление устройствами скоро появится.",battery:"Энергосбережение скоро появится.",language:"Сейчас доступен русский язык.",premium:"ReLooop Premium пока в разработке. Платные функции ещё не подключены.",stars:"Звёзды ReLooop пока не используются. Мы добавим их вместе с системой подарков.",business:"Раздел для бизнеса находится в разработке.", "send-gift":"Открой вкладку «Профиль» → «Подарки», чтобы посмотреть свою коллекцию. Отправка подарков друзьям появится позже.", "ask-help":"Поддержка ReLooop пока готовится. Напиши нам позже через этот раздел.",faq:"ReLooop — мессенджер в разработке. Сейчас доступны регистрация, профиль и базовые чаты.",features:"В ReLooop уже есть аккаунты, профили, чаты и коллекция подарков. Остальные возможности добавляются постепенно.", "privacy-policy":"Мы используем Supabase для входа и хранения данных аккаунта и сообщений. Полная политика конфиденциальности ещё готовится."};
+  if(key==="stars"){openStars();return;}
+  const messages={chats:"Настройки оформления чатов скоро появятся.",privacy:"Настройки конфиденциальности скоро появятся.",notifications:"Настройки уведомлений скоро появятся.",storage:"Управление памятью скоро появится.",folders:"Папки чатов скоро появятся.",devices:"Управление устройствами скоро появится.",battery:"Энергосбережение скоро появится.",language:"Сейчас доступен русский язык.",premium:"ReLooop Premium пока в разработке. Платные функции ещё не подключены.",business:"Раздел для бизнеса находится в разработке.", "send-gift":"Открой вкладку «Профиль» → «Подарки», чтобы посмотреть свою коллекцию. Отправка подарков друзьям появится позже.", "ask-help":"Поддержка ReLooop пока готовится. Напиши нам позже через этот раздел.",faq:"ReLooop — мессенджер в разработке. Сейчас доступны регистрация, профиль и базовые чаты.",features:"В ReLooop уже есть аккаунты, профили, чаты и коллекция подарков. Остальные возможности добавляются постепенно.", "privacy-policy":"Мы используем Supabase для входа и хранения данных аккаунта и сообщений. Полная политика конфиденциальности ещё готовится."};
   alert(messages[key]||"Этот раздел скоро появится.");
 }));
 
