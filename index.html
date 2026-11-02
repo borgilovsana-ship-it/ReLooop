@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#17212b">
   <meta name="description" content="ReLooop — твои сообщения, твой круг.">
   <title>ReLooop — мессенджер</title>
-  <link rel="stylesheet" href="style.css?v=settings-v2">
+  <link rel="stylesheet" href="style.css?v=premium-v1">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -125,6 +125,33 @@
         </div>
       </section>
 
+      <section class="premium-screen" id="premium-screen" hidden aria-label="ReLooop Premium">
+        <div class="premium-page">
+          <header class="premium-header"><button type="button" id="premium-back" aria-label="Назад">‹</button><span>ReLooop Premium</span><span class="premium-header-spacer"></span></header>
+          <section class="premium-hero"><div class="premium-star">★</div><h1>ReLooop Premium</h1><p>Больше возможностей и эксклюзивные функции для твоего общения.</p></section>
+          <section class="premium-plans" aria-label="Тарифы">
+            <button type="button" class="premium-plan" data-plan="yearly"><span class="premium-radio"></span><span class="premium-plan-copy"><strong>Ежегодно</strong><small>Выгодный план</small></span><b>Скоро</b></button>
+            <button type="button" class="premium-plan selected" data-plan="monthly"><span class="premium-radio"></span><span class="premium-plan-copy"><strong>Ежемесячно</strong><small>Гибкий план</small></span><b>Скоро</b></button>
+          </section>
+          <section class="premium-features">
+            <article class="premium-feature"><span class="premium-feature-icon orange">◉</span><div><strong>Истории</strong><p>Больше инструментов оформления и настройки историй.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon orange">▣</span><div><strong>Больше места</strong><p>Расширенные возможности хранения и отправки файлов.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon coral">▦</span><div><strong>ReLooop для бизнеса</strong><p>Дополнительные инструменты для проектов и команд.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon coral">◷</span><div><strong>Настройки приватности</strong><p>Больше способов управлять видимостью профиля и активности.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon pink">♫</span><div><strong>Распознавание голоса</strong><p>Преобразование голосовых сообщений в текст.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon pink">⚡</span><div><strong>Быстрая загрузка</strong><p>Удобное управление загрузкой фото, видео и файлов.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon purple">文</span><div><strong>Перевод сообщений</strong><p>Перевод сообщений на другие языки.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon purple">☺</span><div><strong>Анимированные эмодзи</strong><p>Дополнительные реакции и выразительные эмодзи.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon blue">✦</span><div><strong>Значок Premium</strong><p>Особый значок рядом с именем профиля.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon blue">▧</span><div><strong>Эксклюзивные обои</strong><p>Персональное оформление личных чатов.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon cyan">♡</span><div><strong>Реакции без границ</strong><p>Больше вариантов реакций на сообщения.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon cyan">✧</span><div><strong>Эффекты в сообщениях</strong><p>Красивые визуальные эффекты для переписки.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon green">AI</span><div><strong>Возможности ИИ</strong><p>Умные инструменты для текста и общения.</p></div><b>›</b></article>
+            <article class="premium-feature"><span class="premium-feature-icon green">☷</span><div><strong>Списки задач</strong><p>Планирование дел прямо в мессенджере.</p></div><b>›</b></article>
+          </section>
+          <div class="premium-bottom"><button type="button" id="premium-join">Подписка скоро появится</button><p>Сейчас Premium находится в разработке. Оплата не подключена.</p></div>
+        </div>
+      </section>
       <section class="conversation" id="conversation" aria-label="Переписка">
         <header class="conversation-header"><button class="icon-button back-button" id="back-to-chats" aria-label="Назад к чатам">‹</button><div class="avatar" id="conversation-avatar">R</div><div class="conversation-person"><strong id="conversation-name">ReLooop</strong><span id="conversation-status">Демо-чат</span></div></header>
         <div class="demo-notice" id="demo-notice">Демо-режим: сообщения пока хранятся только на этом устройстве.</div>
@@ -142,6 +169,6 @@
     </nav>
     </div>
   </div>
-  <script src="app.js?v=settings-v2"></script>
+  <script src="app.js?v=premium-v1"></script>
 </body>
 </html>
