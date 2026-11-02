@@ -374,3 +374,41 @@ body.settings-mode .settings-help-title{padding:17px 16px 8px;font-size:14px}
 .premium-bottom button{width:100%;max-width:650px;min-height:60px;border:3px solid #fff;border-radius:40px;background:linear-gradient(100deg,#7889ff,#c34cb8);color:#fff;font-size:16px;font-weight:750;box-shadow:0 2px 10px #382b6c55}
 .premium-bottom p{font-size:11px;color:#fff;margin:7px 0 0}
 @media(min-width:621px){.premium-page{padding-left:22px;padding-right:22px}.premium-bottom{left:50%;transform:translateX(-50%);width:min(100%,680px)}}
+
+
+/* ReLooop Stars wallet preview */
+.stars-screen{position:fixed;inset:0;z-index:31;overflow-y:auto;background:#f1f1f4;color:#202127}
+.stars-page{max-width:680px;min-height:100%;margin:0 auto;padding:env(safe-area-inset-top) 16px 30px}
+.stars-header{height:58px;display:flex;align-items:center}
+.stars-header button{border:0;background:transparent;color:#202127;font-size:42px;line-height:1;width:42px;text-align:left}
+.stars-hero{text-align:center;padding:0 8px 27px}
+.stars-big-icon{height:245px;display:grid;place-items:center;font-size:155px;filter:drop-shadow(0 12px 7px #d79b1e33)}
+.stars-hero h1{font-size:27px;margin:0 0 17px;font-weight:800}
+.stars-hero p{font-size:15px;line-height:1.55;font-weight:650;margin:0 auto;max-width:540px;color:#252a30}
+.stars-balance-card,.stars-earn-card,.stars-history-card{background:#fff;border-radius:25px;margin:0 0 16px}
+.stars-balance-card{padding:24px 18px 22px;text-align:center}
+.stars-balance{display:flex;align-items:center;justify-content:center;gap:12px}
+.stars-balance span{font-size:43px}.stars-balance strong{font-size:48px;line-height:1.2;font-weight:500}
+.stars-balance-caption{display:block;color:#888c92;font-size:15px;margin:4px 0 22px}
+.stars-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stars-actions button{min-height:62px;border:0;border-radius:38px;background:#2698e8;color:#fff;font-size:16px;font-weight:750}
+.stars-gift-link{border:0;background:transparent;color:#2997d0;font-size:15px;font-weight:750;padding:22px 8px 0}
+.stars-earn-card{width:100%;display:flex;align-items:flex-start;gap:14px;text-align:left;padding:19px 17px;border:0;color:#202127}
+.stars-earn-icon{width:46px;height:46px;flex:none;border-radius:13px;background:#55bd68;color:#fff;display:grid;place-items:center;font-size:26px}
+.stars-earn-card>span:nth-child(2){flex:1;min-width:0}
+.stars-earn-card strong{display:block;font-size:17px;margin:0 0 7px}
+.stars-earn-card small{display:inline-block;background:#58a8e8;color:#fff;border-radius:6px;padding:3px 6px;font-size:10px;vertical-align:middle}
+.stars-earn-card em{display:block;color:#858990;font-size:14px;line-height:1.5;font-style:normal;font-weight:650}
+.stars-earn-card>b{font-size:28px;color:#9ca2a9;font-weight:400;align-self:center}
+.stars-history-card{overflow:hidden}
+.stars-tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #e8e8eb}
+.stars-tabs button{position:relative;min-height:62px;border:0;background:#fff;color:#8a8e94;font-size:14px;font-weight:750;padding:8px 3px}
+.stars-tabs button.active{color:#3999d0}
+.stars-tabs button.active:after{content:"";position:absolute;bottom:0;left:15%;right:15%;height:4px;border-radius:5px 5px 0 0;background:#399fe0}
+.stars-empty{min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;color:#858990}
+.stars-empty>span{font-size:35px;margin-bottom:8px}
+.stars-empty strong{font-size:15px;color:#43484f}
+.stars-empty p{font-size:12px;line-height:1.5;max-width:280px;margin:7px 0 0}
+.stars-note{text-align:center;color:#92969d;font-size:11px;line-height:1.45;margin:4px 12px 20px}
+@media(min-width:621px){.stars-page{padding-left:22px;padding-right:22px}.stars-big-icon{height:260px}}
+@media(max-width:380px){.stars-big-icon{height:205px;font-size:130px}.stars-hero h1{font-size:24px}.stars-hero p{font-size:13px}.stars-actions button{font-size:14px}}
