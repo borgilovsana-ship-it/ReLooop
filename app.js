@@ -4,15 +4,18 @@ const $ = (id) => document.getElementById(id);
 // never put a service_role or secret key in frontend code.
 const SUPABASE_URL = "https://vhnwoatkwzmgfcusiiga.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_a2FiQH6N-IBgadyNL04CCA_HDxWqW_E";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-    storage: window.localStorage,
-    storageKey: "sb-vhnwoatkwzmgfcusiiga-auth-token"
-  }
-});
+// Keep the interface responsive even if the Supabase CDN is temporarily unavailable.
+const supabaseClient = window.supabase?.createClient
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        storage: window.localStorage,
+        storageKey: "sb-vhnwoatkwzmgfcusiiga-auth-token"
+      }
+    })
+  : null;
 
 let chats = [];
 let currentChatId = null;
@@ -73,6 +76,10 @@ function setAuthMode(mode){
 }
 async function handleAuth(event){
   event.preventDefault();
+  if(!supabaseClient){
+    setAuthMessage("Не загрузился сервис входа. Проверь интернет и обнови страницу.",true);
+    return;
+  }
   const email=$("auth-email").value.trim().toLowerCase();
   const password=$("auth-password").value;
   const username=$("auth-username").value.trim().toLowerCase();
@@ -513,6 +520,11 @@ function showLoginScreen(message="",isError=false){
   if(message)setAuthMessage(message,isError);
 }
 async function restoreSavedSession(){
+  if(!supabaseClient){
+    authBootstrapped=true;
+    showLoginScreen("Не загрузился сервис входа. Проверь интернет и обнови страницу.",true);
+    return;
+  }
   try{
     const {data,error}=await supabaseClient.auth.getSession();
     if(error) throw error;
@@ -528,6 +540,7 @@ async function restoreSavedSession(){
     console.error("restoreSavedSession:",error);
   }
 }
+if(supabaseClient){
 supabaseClient.auth.onAuthStateChange((event,session)=>{
   if(event==="SIGNED_OUT"){
     currentUser=null;currentProfile=null;chats=[];ownedGiftIds=new Set();
@@ -549,6 +562,7 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
     showLoginScreen();
   }
 });
+}
 // Explicitly read the persisted session as well as listening for auth events.
 // This avoids depending on the timing of INITIAL_SESSION in mobile browsers.
 restoreSavedSession();
