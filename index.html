@@ -152,6 +152,38 @@
           <div class="premium-bottom"><button type="button" id="premium-join">Подписка скоро появится</button><p>Сейчас Premium находится в разработке. Оплата не подключена.</p></div>
         </div>
       </section>
+      <section class="stars-screen" id="stars-screen" hidden aria-label="Звёзды ReLooop">
+  <div class="stars-page">
+    <header class="stars-header"><button type="button" id="stars-back" aria-label="Назад">‹</button><span></span></header>
+    <section class="stars-hero">
+      <div class="stars-big-icon" aria-hidden="true">⭐</div>
+      <h1>Звёзды ReLooop</h1>
+      <p>Звёзды ReLooop — внутренняя валюта мессенджера. Их можно будет использовать для подарков и дополнительных возможностей.</p>
+    </section>
+    <section class="stars-balance-card">
+      <div class="stars-balance"><span>⭐</span><strong id="stars-balance">0</strong></div>
+      <b class="stars-balance-caption">Ваш баланс</b>
+      <div class="stars-actions">
+        <button type="button" id="stars-topup">⊕ &nbsp;Пополнить</button>
+        <button type="button" id="stars-statistics">▥ &nbsp;Статистика</button>
+      </div>
+      <button type="button" class="stars-gift-link" id="stars-gift-friends">♧ &nbsp;Подарить звёзды друзьям</button>
+    </section>
+    <button type="button" class="stars-earn-card" id="stars-earn">
+      <span class="stars-earn-icon">✦</span><span><strong>Заработать звёзды <small>NEW</small></strong><em>В будущем можно будет получать звёзды за активность и участие в жизни ReLooop.</em></span><b>›</b>
+    </button>
+    <section class="stars-history-card">
+      <div class="stars-tabs" role="tablist" aria-label="Операции со звёздами">
+        <button type="button" class="active" data-stars-tab="all">Все операции</button>
+        <button type="button" data-stars-tab="earned">Начисления</button>
+        <button type="button" data-stars-tab="spent">Списания</button>
+      </div>
+      <div class="stars-empty" id="stars-history-empty"><span>⭐</span><strong>Операций пока нет</strong><p>Здесь появится история начислений и использования звёзд.</p></div>
+    </section>
+    <p class="stars-note">Баланс пока демонстрационный. Пополнение, переводы и реальные операции ещё не подключены.</p>
+  </div>
+</section>
+
       <section class="conversation" id="conversation" aria-label="Переписка">
         <header class="conversation-header"><button class="icon-button back-button" id="back-to-chats" aria-label="Назад к чатам">‹</button><div class="avatar" id="conversation-avatar">R</div><div class="conversation-person"><strong id="conversation-name">ReLooop</strong><span id="conversation-status">Демо-чат</span></div></header>
         <div class="demo-notice" id="demo-notice">Демо-режим: сообщения пока хранятся только на этом устройстве.</div>
