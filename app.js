@@ -310,7 +310,8 @@ function showScreen(screenId){
   document.body.classList.toggle("chats-mode",screenId==="chats-screen");
   document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===screenId));
   document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.screen===screenId));
-  $("premium-screen").hidden=true;\n  $("topbar").hidden=false;$("bottom-nav").hidden=false;
+  $("premium-screen").hidden=true;
+  $("topbar").hidden=false;$("bottom-nav").hidden=false;
 }
 async function openChat(id){
   const chat=chats.find(item=>item.id===id);
