@@ -25,6 +25,18 @@ function escapeHTML(value){
   return String(value ?? "").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
 function validColor(color){return /^#[0-9a-f]{6}$/i.test(color || "") ? color : "#477da8";}
+const giftCatalog = [
+  {id:"rose",name:"Роза",emoji:"🌹",rarity:"Обычный",className:"common"},
+  {id:"star",name:"Звезда",emoji:"⭐",rarity:"Обычный",className:"common"},
+  {id:"heart",name:"Сердце",emoji:"💖",rarity:"Обычный",className:"common"},
+  {id:"teddy",name:"Мишка",emoji:"🧸",rarity:"Редкий",className:"rare"},
+  {id:"cupcake",name:"Кексик",emoji:"🧁",rarity:"Редкий",className:"rare"},
+  {id:"crown",name:"Корона",emoji:"👑",rarity:"Эпический",className:"epic"},
+  {id:"diamond",name:"Алмаз",emoji:"💎",rarity:"Эпический",className:"epic"},
+  {id:"rocket",name:"Ракета",emoji:"🚀",rarity:"Легендарный",className:"legendary"}
+];
+let ownedGiftIds = new Set();
+
 function setAuthMessage(message, isError=false){
   const el=$("auth-message");el.textContent=message;el.classList.toggle("error",isError);
 }
@@ -105,6 +117,75 @@ async function ensureProfile(preferredUsername=""){
   }
   throw new Error("Не удалось создать профиль. Попробуй войти ещё раз.");
 }
+async function loadUserGifts(){
+  const {data,error}=await supabaseClient.from("user_gifts").select("gift_id").eq("user_id",currentUser.id);
+  if(error){
+    $("gift-status").textContent="Не удалось загрузить коллекцию. Попробуй обновить страницу.";
+    console.error("loadUserGifts:",error);
+    return;
+  }
+  ownedGiftIds=new Set((data||[]).map(row=>row.gift_id));
+  renderGiftSections();
+}
+function makeGiftCard(gift,owned,showClaim){
+  const card=document.createElement("article");
+  card.className="gift-card rarity-"+gift.className;
+  const visual=document.createElement("div");
+  visual.className="gift-visual";
+  visual.textContent=gift.emoji;
+  const name=document.createElement("strong");
+  name.textContent=gift.name;
+  const rarity=document.createElement("span");
+  rarity.className="gift-rarity";
+  rarity.textContent=gift.rarity;
+  card.append(visual,name,rarity);
+  if(showClaim){
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="gift-claim-button";
+    button.dataset.claimGift=gift.id;
+    button.disabled=owned;
+    button.textContent=owned?"В коллекции":"Получить";
+    card.append(button);
+  }
+  return card;
+}
+function renderGiftSections(){
+  const collection=$("gift-collection");
+  const catalog=$("gift-catalog");
+  if(!collection||!catalog)return;
+  collection.replaceChildren();
+  catalog.replaceChildren();
+  const owned=giftCatalog.filter(gift=>ownedGiftIds.has(gift.id));
+  $("gift-owned-count").textContent=owned.length+" / "+giftCatalog.length;
+  if(!owned.length){
+    const empty=document.createElement("p");
+    empty.className="gift-empty";
+    empty.textContent="Пока пусто. Выбери первый подарок в каталоге ниже!";
+    collection.append(empty);
+  }else{
+    owned.forEach(gift=>collection.append(makeGiftCard(gift,true,false)));
+  }
+  giftCatalog.forEach(gift=>catalog.append(makeGiftCard(gift,ownedGiftIds.has(gift.id),true)));
+}
+async function claimGift(giftId){
+  const gift=giftCatalog.find(item=>item.id===giftId);
+  if(!gift||ownedGiftIds.has(giftId))return;
+  const button=document.querySelector('[data-claim-gift="'+giftId+'"]');
+  if(button){button.disabled=true;button.textContent="Добавляем…";}
+  $("gift-status").textContent="";
+  const {error}=await supabaseClient.from("user_gifts").insert({user_id:currentUser.id,gift_id:giftId});
+  if(error&&error.code!=="23505"){
+    $("gift-status").textContent="Не получилось добавить подарок. Попробуй ещё раз.";
+    if(button){button.disabled=false;button.textContent="Получить";}
+    console.error("claimGift:",error);
+    return;
+  }
+  ownedGiftIds.add(giftId);
+  renderGiftSections();
+  $("gift-status").textContent="Подарок «"+gift.name+"» добавлен в коллекцию!";
+}
+
 async function showAuthenticatedApp(){
   $("auth-screen").hidden=true;$("app-content").hidden=false;
   $("account-email").textContent=currentUser?.email||"Аккаунт ReLooop";
@@ -130,6 +211,7 @@ async function showAuthenticatedApp(){
   $("conversation-status").textContent="Личная переписка";
   $("demo-notice").hidden=true;
   await loadConversations();
+  await loadUserGifts();
   subscribeToMessages();
 }
 async function handleSignOut(){
@@ -375,10 +457,21 @@ $("profile-settings").addEventListener("click",()=>showScreen("settings-screen")
 $("profile-more").addEventListener("click",()=>showScreen("settings-screen"));
 document.querySelectorAll("[data-profile-tab]").forEach(tab=>tab.addEventListener("click",()=>{
   document.querySelectorAll("[data-profile-tab]").forEach(item=>item.classList.toggle("active",item===tab));
-  const labels={posts:["Публикаций пока нет...","Здесь будут отображаться твои публикации"],archive:["Архив пока пуст...","Сохранённые публикации появятся здесь"],gifts:["Подарков пока нет...","Здесь будут отображаться подарки"]};
-  $("profile-empty-title").textContent=labels[tab.dataset.profileTab][0];
-  $("profile-empty-description").textContent=labels[tab.dataset.profileTab][1];
+  const isGifts=tab.dataset.profileTab==="gifts";
+  $("profile-empty").hidden=isGifts;
+  $("profile-gifts-panel").hidden=!isGifts;
+  if(!isGifts){
+    const labels={posts:["Публикаций пока нет...","Здесь будут отображаться твои публикации"],archive:["Архив пока пуст...","Сохранённые публикации появятся здесь"]};
+    $("profile-empty-title").textContent=labels[tab.dataset.profileTab][0];
+    $("profile-empty-description").textContent=labels[tab.dataset.profileTab][1];
+  }else{
+    loadUserGifts();
+  }
 }));
+$("gift-catalog").addEventListener("click",event=>{
+  const button=event.target.closest("[data-claim-gift]");
+  if(button)claimGift(button.dataset.claimGift);
+});
 $("profile-add").addEventListener("click",()=>alert("Раздел публикаций пока в разработке."));
 setAuthMode("login");
 supabaseClient.auth.onAuthStateChange((event,session)=>{
