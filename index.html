@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#17212b">
   <meta name="description" content="ReLooop — твои сообщения, твой круг.">
   <title>ReLooop — мессенджер</title>
-  <link rel="stylesheet" href="style.css?v=vip-name-badge-2">
+  <link rel="stylesheet" href="style.css?v=gifts-v1">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -71,7 +71,16 @@
           <div class="profile-music">♫ &nbsp; Музыка пока не добавлена &nbsp;›</div>
           <div class="profile-details"><div class="profile-detail"><strong id="profile-detail-username">@username</strong><span>Имя пользователя</span></div><div class="profile-detail"><strong id="profile-detail-email">—</strong><span>Электронная почта</span></div><div class="profile-detail"><strong>ReLooop</strong><span>Твой мессенджер</span></div></div>
           <div class="profile-tabs" role="tablist" aria-label="Разделы профиля"><button type="button" class="profile-tab active" data-profile-tab="posts">Публикации</button><button type="button" class="profile-tab" data-profile-tab="archive">Архив</button><button type="button" class="profile-tab" data-profile-tab="gifts">Подарки</button></div>
-          <div class="profile-empty"><h3 id="profile-empty-title">Публикаций пока нет...</h3><p id="profile-empty-description">Здесь будут отображаться твои публикации</p></div>
+          <div class="profile-empty" id="profile-empty"><h3 id="profile-empty-title">Публикаций пока нет...</h3><p id="profile-empty-description">Здесь будут отображаться твои публикации</p></div>
+          <section class="profile-gifts-panel" id="profile-gifts-panel" hidden aria-label="Подарки">
+            <div class="gift-section-heading"><h3>Моя коллекция</h3><span id="gift-owned-count">0 / 8</span></div>
+            <p class="gift-section-note">Подарки, которые ты собрал в ReLooop.</p>
+            <div class="gift-grid" id="gift-collection"></div>
+            <div class="gift-section-heading gift-catalog-heading"><h3>Каталог подарков</h3><span>Бесплатно</span></div>
+            <p class="gift-section-note">Забирай подарки в свою коллекцию. Пока это первая тестовая версия.</p>
+            <div class="gift-grid" id="gift-catalog"></div>
+            <p class="gift-status" id="gift-status" role="status" aria-live="polite"></p>
+          </section>
           <button type="button" class="profile-add-button" id="profile-add">＋ &nbsp; Добавить</button>
         </div>
       </section>
@@ -119,6 +128,6 @@
     </nav>
     </div>
   </div>
-  <script src="app.js?v=private-messages-1"></script>
+  <script src="app.js?v=gifts-v1"></script>
 </body>
 </html>
