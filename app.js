@@ -248,6 +248,72 @@ async function handleSignOut(){
   $("app-content").hidden=true;$("auth-screen").hidden=false;
   $("auth-password").value="";setAuthMode("login");
 }
+let peopleSearchRequest=0;
+async function searchPeople(){
+  const input=$("contacts-search-input");
+  const results=$("contacts-search-results");
+  const listCard=$("contacts-list").closest(".contacts-list-card");
+  const shortcuts=$("contacts-shortcuts");
+  const raw=input.value.trim();
+  const term=raw.replace(/^@/,"").trim();
+  const request=++peopleSearchRequest;
+  results.replaceChildren();
+  if(!term){
+    results.hidden=true;listCard.hidden=false;shortcuts.hidden=false;return;
+  }
+  results.hidden=false;listCard.hidden=true;shortcuts.hidden=true;
+  if(term.length<2){
+    const hint=document.createElement("p");hint.className="people-search-message";hint.textContent="Введи хотя бы 2 символа для поиска.";results.append(hint);return;
+  }
+  const loading=document.createElement("p");loading.className="people-search-message";loading.textContent="Ищем людей…";results.append(loading);
+  try{
+    const pattern="%"+term.replace(/[\\\\%_]/g,"\\\\function renderChats(){")+"%";
+    const [byUsername,byName]=await Promise.all([
+      supabaseClient.from("profiles").select("id,username,display_name").ilike("username",pattern).limit(12),
+      supabaseClient.from("profiles").select("id,username,display_name").ilike("display_name",pattern).limit(12)
+    ]);
+    if(request!==peopleSearchRequest)return;
+    if(byUsername.error)throw byUsername.error;
+    if(byName.error)throw byName.error;
+    const found=new Map();
+    [...(byUsername.data||[]),...(byName.data||[])].forEach(profile=>{
+      if(profile.id!==currentUser.id)found.set(profile.id,profile);
+    });
+    const people=[...found.values()].slice(0,20);
+    results.replaceChildren();
+    if(!people.length){
+      const empty=document.createElement("p");empty.className="people-search-message";empty.textContent="Никого не нашли. Проверь имя или @username.";results.append(empty);return;
+    }
+    people.forEach(profile=>{
+      const button=document.createElement("button");button.type="button";button.className="people-result";
+      const avatar=document.createElement("span");avatar.className="people-result-avatar";avatar.textContent=Array.from(profile.display_name||profile.username||"R")[0].toUpperCase();
+      const copy=document.createElement("span");copy.className="people-result-copy";
+      const name=document.createElement("strong");name.textContent=profile.display_name||profile.username||"Пользователь";
+      const handle=document.createElement("small");handle.textContent="@"+profile.username;
+      copy.append(name,handle);const action=document.createElement("b");action.textContent="›";
+      button.append(avatar,copy,action);
+      button.addEventListener("click",()=>startChatWithProfile(profile));
+      results.append(button);
+    });
+  }catch(error){
+    if(request!==peopleSearchRequest)return;
+    console.error("searchPeople:",error);
+    results.replaceChildren();
+    const message=document.createElement("p");message.className="people-search-message";message.textContent="Не удалось выполнить поиск. Попробуй ещё раз.";results.append(message);
+  }
+}
+function startChatWithProfile(profile){
+  if(!profile?.id||profile.id===currentUser?.id)return;
+  let chat=chats.find(item=>item.id===profile.id);
+  if(!chat){
+    chat={id:profile.id,name:profile.display_name||profile.username,username:profile.username||"",avatar:Array.from(profile.display_name||profile.username||"R")[0].toUpperCase(),color:"#477da8",preview:"Новая переписка",time:""};
+    chats.unshift(chat);
+  }
+  $("contacts-search-input").value="";
+  searchPeople();
+  renderChats();
+  openChat(profile.id);
+}
 function renderChats(){
   const query=$("search").value.trim().toLocaleLowerCase("ru");
   const list=$("chat-list");list.replaceChildren();
@@ -610,10 +676,7 @@ document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("c
   alert(messages[key]||"Этот раздел скоро появится.");
 }));
 
-$("contacts-search-input").addEventListener("input",()=>{
-  const empty=$("contacts-list").querySelector(".contacts-empty");
-  if(empty){const q=$("contacts-search-input").value.trim();empty.querySelector("strong").textContent=q?"Ничего не найдено":"Пока нет контактов";}
-});
+$("contacts-search-input").addEventListener("input",searchPeople);
 $("invite-friends").addEventListener("click",()=>{
   if(navigator.share){navigator.share({title:"Присоединяйся к ReLooop",text:"Давай общаться в ReLooop!",url:"https://borgilovsana-ship-it.github.io/ReLooop/"}).catch(()=>{});}
   else if(navigator.clipboard){navigator.clipboard.writeText("https://borgilovsana-ship-it.github.io/ReLooop/").then(()=>alert("Ссылка на ReLooop скопирована!")).catch(()=>alert("ReLooop: https://borgilovsana-ship-it.github.io/ReLooop/"));}
