@@ -267,7 +267,8 @@ async function searchPeople(){
   }
   const loading=document.createElement("p");loading.className="people-search-message";loading.textContent="Ищем людей…";results.append(loading);
   try{
-    const pattern="%"+term.replace(/[\\\\%_]/g,"\\\\function renderChats(){")+"%";
+    const safeTerm=term.replace(/[%_(),]/g,"");
+    const pattern="%"+safeTerm+"%";
     const [byUsername,byName]=await Promise.all([
       supabaseClient.from("profiles").select("id,username,display_name").ilike("username",pattern).limit(12),
       supabaseClient.from("profiles").select("id,username,display_name").ilike("display_name",pattern).limit(12)
