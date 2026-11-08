@@ -98,3 +98,21 @@ body.profile-mode .nav-button.active{
   .nav-button{font-size:10px!important}
   .nav-button span{font-size:21px!important}
 }
+
+/* Compact chat rows — reduce oversized chat items */
+body.chats-mode .chat-row{
+  min-height:82px!important;
+  height:auto!important;
+  padding:9px 4px!important;
+  gap:11px!important;
+}
+body.chats-mode .chat-row .avatar{
+  width:50px!important;
+  height:50px!important;
+  flex:0 0 50px!important;
+  font-size:20px!important;
+}
+body.chats-mode .chat-name{font-size:15px!important}
+body.chats-mode .chat-preview{font-size:12px!important;margin-top:4px!important}
+body.chats-mode .chat-time{font-size:10px!important;padding-top:1px!important}
+body.chats-mode .chat-list{padding-bottom:8px!important}
