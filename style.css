@@ -430,3 +430,72 @@ body.contacts-mode .people-result{padding:8px}
 body.contacts-mode .people-result-avatar{width:36px;height:36px;font-size:15px}
 body.contacts-mode .people-result-copy strong{font-size:12px}
 body.contacts-mode .people-result-copy small{font-size:10px}
+
+
+/* ReLooop glassmorphism refresh — dark violet chat screen + four-item navigation */
+:root{
+  --glass-bg:#080711;
+  --glass-panel:rgba(31,25,57,.62);
+  --glass-line:rgba(190,165,255,.20);
+  --glass-text:#f7f3ff;
+  --glass-muted:#aaa0c8;
+  --glass-violet:#7137ff;
+}
+body.chats-mode{background:var(--glass-bg);color:var(--glass-text)}
+body.chats-mode .app-shell{background:radial-gradient(ellipse at 88% 4%,rgba(100,45,220,.25),transparent 34%),radial-gradient(ellipse at 4% 78%,rgba(64,38,135,.20),transparent 38%),#080711;color:var(--glass-text)}
+body.chats-mode .chats-page{background:transparent;color:var(--glass-text);padding:10px 14px 100px}
+body.chats-mode .chats-heading{height:66px;gap:12px;padding:0 3px}
+body.chats-mode .chats-brand-icon{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#9b65ff,#4d16d9);box-shadow:0 7px 24px #6b32ff55;color:white}
+body.chats-mode .chats-heading h2{color:#fff;font-size:27px;letter-spacing:-.6px}
+body.chats-mode .chats-heading button{color:#e9ddff;border:1px solid var(--glass-line);border-radius:15px;background:var(--glass-panel);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+body.chats-mode .chats-search{height:48px;margin:9px 0 13px;border:1px solid var(--glass-line);background:rgba(255,255,255,.055);box-shadow:inset 0 1px 0 #ffffff0b;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+body.chats-mode .chats-search span{color:#bda7ff}
+body.chats-mode .chats-search input{color:#fff}
+body.chats-mode .chats-search input::placeholder{color:#a69bbd}
+body.chats-mode .chat-tabs{height:48px;margin-bottom:13px;padding:4px;border:1px solid var(--glass-line);background:rgba(255,255,255,.055);box-shadow:none;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+body.chats-mode .chat-tab{height:40px;color:#c0b5d9;font-size:13px}
+body.chats-mode .chat-tab.active{background:linear-gradient(115deg,#743cff,#4b20d4);color:white;box-shadow:0 5px 18px #612dff55}
+body.chats-mode .chat-tab span{background:#d9caff;color:#35117d}
+body.chats-mode .chat-list{display:flex;flex-direction:column;gap:9px;padding:0 0 10px}
+body.chats-mode .chat-row{min-height:82px;padding:10px 12px;border:1px solid var(--glass-line);border-radius:22px;background:linear-gradient(115deg,rgba(54,43,88,.68),rgba(20,17,37,.72));color:#fff;box-shadow:inset 0 1px 0 #ffffff0d;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+body.chats-mode .chat-row:active{background:rgba(105,65,190,.34)}
+body.chats-mode .chat-row .avatar{width:54px;height:54px;flex-basis:54px;border:1px solid #ffffff20;box-shadow:0 4px 15px #0004}
+body.chats-mode .chat-name{color:#fbf9ff;font-size:14px}
+body.chats-mode .chat-time{color:#a99fc3;font-size:10px}
+body.chats-mode .chat-preview{color:#b6accd;font-size:12px}
+body.chats-mode .chats-fab{background:linear-gradient(145deg,#9a65ff,#5a25e8);box-shadow:0 7px 22px #612dff66;border:1px solid #ffffff30}
+body.chats-mode .empty-state{color:#b6accd}
+.bottom-nav{
+  height:76px!important;
+  bottom:8px!important;
+  width:calc(100% - 28px)!important;
+  max-width:590px!important;
+  padding:5px 7px calc(5px + env(safe-area-inset-bottom))!important;
+  border:1px solid rgba(190,165,255,.23)!important;
+  border-radius:25px!important;
+  background:rgba(22,17,42,.82)!important;
+  box-shadow:0 12px 35px #0008,inset 0 1px 0 #ffffff12!important;
+  backdrop-filter:blur(24px)!important;
+  -webkit-backdrop-filter:blur(24px)!important;
+}
+.nav-button{
+  min-width:0;
+  border:0!important;
+  border-radius:18px!important;
+  color:#a99fc3!important;
+  font-size:11px!important;
+  font-weight:600;
+  gap:3px!important;
+}
+.nav-button span{font-size:21px!important}
+.nav-button.active{
+  color:#fff!important;
+  background:linear-gradient(145deg,rgba(130,75,255,.88),rgba(79,34,194,.88))!important;
+  box-shadow:0 5px 18px #652dff55,inset 0 1px 0 #ffffff35;
+  margin:0!important;
+}
+@media(max-width:360px){
+  .nav-button{font-size:10px!important}
+  .nav-button span{font-size:19px!important}
+  body.chats-mode .chats-page{padding-left:10px;padding-right:10px}
+}
