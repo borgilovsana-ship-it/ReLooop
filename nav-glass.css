@@ -163,3 +163,52 @@ body.chats-mode .chat-tabs .chat-tab{
   font-size:13px!important;
 }
 body.chats-mode .chats-page{padding-bottom:88px!important}
+
+
+/* Telegram-proportioned compact Chats screen and bottom navigation. */
+body.chats-mode .chats-page{padding:8px 14px 92px!important}
+body.chats-mode .chats-heading{height:58px!important;gap:10px!important}
+body.chats-mode .chats-brand-icon{
+  width:46px!important;height:46px!important;flex:0 0 46px!important;
+  border-radius:15px!important;font-size:25px!important;
+}
+body.chats-mode .chats-heading h2{font-size:23px!important;letter-spacing:-.3px!important}
+body.chats-mode .chats-heading button{width:42px!important;height:42px!important;border-radius:14px!important}
+body.chats-mode .chats-search{
+  width:100%!important;height:46px!important;margin:8px 0 12px!important;
+  padding:0 14px!important;display:flex!important;gap:10px!important;border-radius:24px!important;
+}
+body.chats-mode .chats-search span{font-size:22px!important}
+body.chats-mode .chats-search input{width:100%!important;opacity:1!important;font-size:14px!important}
+body.chats-mode .chat-tabs{
+  height:52px!important;margin:0 0 12px!important;padding:4px!important;
+  border-radius:28px!important;gap:4px!important;
+}
+body.chats-mode .chat-tab{height:44px!important;border-radius:24px!important;font-size:14px!important}
+body.chats-mode #chat-list{
+  display:flex!important;flex-direction:column!important;gap:6px!important;padding:0 0 8px!important;
+}
+body.chats-mode #chat-list .chat-row{
+  box-sizing:border-box!important;min-height:76px!important;height:76px!important;
+  padding:8px 10px!important;gap:11px!important;border-radius:19px!important;
+}
+body.chats-mode #chat-list .chat-row .avatar{
+  width:50px!important;height:50px!important;min-width:50px!important;
+  flex:0 0 50px!important;font-size:20px!important;
+}
+body.chats-mode #chat-list .chat-row .chat-name{font-size:14px!important;line-height:1.2!important}
+body.chats-mode #chat-list .chat-row .chat-preview{font-size:11px!important;margin-top:4px!important;line-height:1.2!important}
+body.chats-mode #chat-list .chat-row .chat-time{font-size:10px!important;padding-top:1px!important}
+body.chats-mode .chats-fab{width:54px!important;height:54px!important;right:18px!important;bottom:94px!important;font-size:29px!important}
+.bottom-nav{
+  height:76px!important;width:calc(100% - 32px)!important;max-width:590px!important;
+  bottom:calc(8px + env(safe-area-inset-bottom))!important;padding:5px 6px!important;
+  border-radius:25px!important;gap:4px!important;
+}
+.nav-button{padding:4px 2px!important;gap:3px!important;font-size:11px!important;border-radius:18px!important}
+.nav-button span{font-size:23px!important;height:24px!important}
+@media(max-width:430px){
+  .bottom-nav{height:76px!important;width:calc(100% - 32px)!important}
+  .nav-button{font-size:11px!important}
+  .nav-button span{font-size:23px!important}
+}
