@@ -637,3 +637,53 @@ body.settings-mode .bottom-nav{height:54px!important;bottom:5px!important;width:
 body.settings-mode .nav-button{min-width:0;border:0!important;border-radius:18px!important;color:#a99fc3!important;font-size:10px!important;gap:0!important;padding:2px!important}
 body.settings-mode .nav-button span{font-size:18px!important;line-height:20px}
 body.settings-mode .nav-button.active{color:#fff!important;background:linear-gradient(145deg,rgba(130,75,255,.92),rgba(79,34,194,.92))!important;box-shadow:0 5px 18px #652dff55,inset 0 1px 0 #ffffff35!important;margin:2px!important}
+
+
+/* Profile refresh — matching the ReLooop violet glass settings */
+body.profile-mode{background:#070610;color:#f8f5ff}
+body.profile-mode .app-shell{background:radial-gradient(ellipse at 90% 2%,rgba(105,48,235,.28),transparent 34%),radial-gradient(ellipse at 5% 65%,rgba(75,42,150,.18),transparent 38%),#070610;color:#f8f5ff}
+body.profile-mode .profile-page{max-width:650px;margin:0 auto;padding:0 12px 84px;min-height:calc(100dvh - 58px);background:transparent;color:#f8f5ff}
+body.profile-mode .profile-topline{height:46px;padding:0 5px}
+body.profile-mode .profile-mini-logo{color:#f8f5ff;font-size:20px}
+body.profile-mode .profile-more{color:#e9ddff;font-size:23px;width:32px;height:34px}
+body.profile-mode .profile-hero{padding:7px 0 14px}
+body.profile-mode .profile-photo{width:94px;height:94px;font-size:42px;border:1px solid rgba(205,180,255,.3);box-shadow:0 7px 25px rgba(94,48,220,.28)}
+body.profile-mode .profile-hero h2{color:#fff;font-size:21px;margin:12px 0 3px}
+body.profile-mode .profile-username-handle{color:#bda2ff;font-size:11px;margin:0 0 6px}
+body.profile-mode .profile-online{color:#b8acce;font-size:11px;gap:6px}
+body.profile-mode .profile-online span{width:9px;height:9px;border:0;border-radius:50%;background:#53d68a}
+body.profile-mode .profile-actions{gap:7px;margin:9px 0 12px}
+body.profile-mode .profile-action{min-height:62px;padding:6px 3px;border:1px solid rgba(190,165,255,.17);border-radius:15px;background:rgba(31,25,57,.72);color:#f8f5ff;font-size:11px;gap:5px;box-shadow:inset 0 1px 0 #ffffff0d}
+body.profile-mode .profile-action span{font-size:21px;color:#c7aaff}
+body.profile-mode .profile-edit-panel{padding:10px 12px;border:1px solid rgba(190,165,255,.17);border-radius:16px;background:rgba(31,25,57,.72);color:#f8f5ff}
+body.profile-mode .profile-edit-panel .username-editor{border-color:rgba(190,165,255,.14)}
+body.profile-mode .profile-edit-panel label{color:#e8ddff}
+body.profile-mode .profile-edit-panel .text-field{background:#151027;border:1px solid #49376c;color:#fff;border-radius:10px;padding:9px 11px}
+body.profile-mode .profile-edit-panel .username-cooldown{color:#aaa0c8}
+body.profile-mode .profile-edit-panel .primary-button{border-radius:10px;padding:8px 12px;font-size:11px}
+body.profile-mode .profile-music{margin:0 auto 13px;padding:8px 14px;border:1px solid rgba(190,165,255,.17);border-radius:14px;background:rgba(31,25,57,.72);color:#cbb8f5;font-size:11px}
+body.profile-mode .profile-details{margin:0 0 13px;padding:3px 0;border:1px solid rgba(190,165,255,.17);border-radius:17px;background:rgba(31,25,57,.72)}
+body.profile-mode .profile-detail{padding:11px 14px 9px;gap:4px;border-bottom:1px solid rgba(190,165,255,.10)}
+body.profile-mode .profile-detail:last-child{border-bottom:0}
+body.profile-mode .profile-detail strong{font-size:13px;color:#f8f5ff}
+body.profile-mode .profile-detail span{font-size:10px;color:#aaa0c8}
+body.profile-mode .profile-tabs{height:43px;gap:4px;padding:4px;border:1px solid rgba(190,165,255,.17);border-radius:15px;background:rgba(31,25,57,.72)}
+body.profile-mode .profile-tab{padding:7px 9px;border-radius:11px;color:#aaa0c8;font-size:11px}
+body.profile-mode .profile-tab.active{background:linear-gradient(145deg,rgba(130,75,255,.92),rgba(79,34,194,.92));color:#fff}
+body.profile-mode .profile-empty{padding:30px 10px 16px}
+body.profile-mode .profile-empty h3{font-size:15px;color:#f8f5ff;margin-bottom:7px}
+body.profile-mode .profile-empty p{font-size:10px;color:#aaa0c8}
+body.profile-mode .profile-gifts-panel{margin:10px 0 18px}
+body.profile-mode .gift-section-heading h3{font-size:14px;color:#f8f5ff}
+body.profile-mode .gift-section-heading>span{font-size:10px;background:#34245a;color:#d5bdff}
+body.profile-mode .gift-section-note{font-size:10px;color:#aaa0c8}
+body.profile-mode .gift-card{border:1px solid rgba(190,165,255,.16);background:rgba(31,25,57,.78)}
+body.profile-mode .gift-card strong{color:#f8f5ff}
+body.profile-mode .gift-rarity{color:#aaa0c8}
+body.profile-mode .gift-empty{border-color:#49376c;color:#aaa0c8}
+body.profile-mode .gift-status{color:#c7aaff}
+body.profile-mode .profile-add-button{bottom:64px;padding:7px 16px;border:1px solid #bda2ff;border-radius:20px;background:linear-gradient(145deg,#824bff,#4f22c2);color:#fff;font-size:11px;box-shadow:0 5px 18px #652dff55}
+body.profile-mode .bottom-nav{height:54px!important;bottom:5px!important;width:calc(100% - 64px)!important;max-width:500px!important;padding:2px!important;border:1px solid rgba(190,165,255,.24)!important;border-radius:24px!important;background:rgba(22,17,42,.88)!important;box-shadow:0 12px 35px #0009,inset 0 1px 0 #ffffff18!important;backdrop-filter:blur(26px)!important;-webkit-backdrop-filter:blur(26px)!important}
+body.profile-mode .nav-button{min-width:0;border:0!important;border-radius:18px!important;color:#a99fc3!important;font-size:10px!important;gap:0!important;padding:2px!important}
+body.profile-mode .nav-button span{font-size:18px!important;line-height:20px}
+body.profile-mode .nav-button.active{color:#fff!important;background:linear-gradient(145deg,rgba(130,75,255,.92),rgba(79,34,194,.92))!important;box-shadow:0 5px 18px #652dff55,inset 0 1px 0 #ffffff35!important;margin:2px!important}
