@@ -212,3 +212,129 @@ body.chats-mode .chats-fab{width:54px!important;height:54px!important;right:18px
   .nav-button{font-size:11px!important}
   .nav-button span{font-size:23px!important}
 }
+
+
+/* Contacts tab — compact Telegram-inspired layout in ReLooop glass theme. */
+body.contacts-mode{
+  background:#070610!important;
+  color:#f8f5ff!important;
+}
+body.contacts-mode .app-shell{
+  min-height:100dvh!important;
+  background:
+    radial-gradient(ellipse at 96% 5%,rgba(95,38,220,.30),transparent 31%),
+    radial-gradient(ellipse at 0% 68%,rgba(78,40,155,.18),transparent 36%),
+    #070610!important;
+  color:#f8f5ff!important;
+}
+body.contacts-mode .contacts-page{
+  box-sizing:border-box!important;
+  min-height:100dvh!important;
+  max-width:650px!important;
+  margin:0 auto!important;
+  padding:8px 14px 100px!important;
+  background:transparent!important;
+  color:#f8f5ff!important;
+}
+body.contacts-mode .contacts-heading{
+  height:58px!important;
+  padding:0 4px!important;
+}
+body.contacts-mode .contacts-heading h2{
+  margin:0!important;
+  color:#fff!important;
+  font-size:24px!important;
+  font-weight:700!important;
+  letter-spacing:-.3px!important;
+}
+body.contacts-mode .contacts-heading button{
+  width:42px!important;height:42px!important;
+  padding:0!important;border:1px solid rgba(190,165,255,.22)!important;
+  border-radius:14px!important;background:rgba(31,23,57,.68)!important;
+  color:#e9ddff!important;font-size:21px!important;
+  backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;
+}
+body.contacts-mode .contacts-search{
+  box-sizing:border-box!important;
+  width:100%!important;height:46px!important;
+  margin:8px 0 13px!important;padding:0 14px!important;
+  display:flex!important;align-items:center!important;gap:10px!important;
+  border:1px solid rgba(190,165,255,.20)!important;
+  border-radius:24px!important;
+  background:rgba(255,255,255,.055)!important;
+  box-shadow:inset 0 1px 0 #ffffff0b!important;
+  backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;
+}
+body.contacts-mode .contacts-search span{font-size:22px!important;color:#bda7ff!important}
+body.contacts-mode .contacts-search input{
+  min-width:0!important;flex:1!important;
+  color:#fff!important;font-size:14px!important;
+}
+body.contacts-mode .contacts-search input::placeholder{color:#a99fc4!important}
+body.contacts-mode .contacts-search-results{
+  margin:0 0 12px!important;padding:6px!important;
+  border:1px solid rgba(190,165,255,.20)!important;
+  border-radius:17px!important;background:rgba(31,23,57,.88)!important;
+}
+body.contacts-mode .contacts-shortcuts{
+  margin:0 0 12px!important;padding:4px 10px!important;
+  border:1px solid rgba(190,165,255,.20)!important;
+  border-radius:19px!important;
+  background:linear-gradient(115deg,rgba(54,43,88,.66),rgba(20,17,37,.76))!important;
+  box-shadow:inset 0 1px 0 #ffffff0d!important;
+  backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;
+}
+body.contacts-mode .contact-shortcut{
+  height:56px!important;padding:0 6px!important;gap:11px!important;
+  background:transparent!important;color:#f8f5ff!important;
+}
+body.contacts-mode .contact-shortcut + .contact-shortcut{
+  border-top:1px solid rgba(190,165,255,.12)!important;
+}
+body.contacts-mode .contact-shortcut strong{
+  color:#f8f5ff!important;font-size:14px!important;font-weight:650!important;
+}
+body.contacts-mode .contact-shortcut>b{color:#a99fc4!important;font-size:21px!important}
+body.contacts-mode .shortcut-icon{
+  width:36px!important;height:36px!important;flex:0 0 36px!important;
+  display:grid!important;place-items:center!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  border-radius:12px!important;font-size:18px!important;
+  color:#e8dcff!important;background:rgba(125,79,220,.25)!important;
+}
+body.contacts-mode .contacts-list-card{
+  min-height:250px!important;padding:15px 12px 16px!important;
+  border:1px solid rgba(190,165,255,.20)!important;
+  border-radius:19px!important;
+  background:linear-gradient(115deg,rgba(54,43,88,.62),rgba(20,17,37,.74))!important;
+  box-shadow:inset 0 1px 0 #ffffff0d!important;
+  backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;
+}
+body.contacts-mode .contacts-sort-label{
+  margin:0 0 10px 8px!important;
+  color:#bda7ff!important;font-size:12px!important;font-weight:650!important;
+}
+body.contacts-mode .contacts-list{min-height:180px!important}
+body.contacts-mode .contacts-empty{
+  min-height:175px!important;padding:14px!important;color:#a99fc4!important;
+}
+body.contacts-mode .contacts-empty>span{margin-bottom:8px!important;color:#bda7ff!important;font-size:32px!important}
+body.contacts-mode .contacts-empty strong{color:#f8f5ff!important;font-size:15px!important}
+body.contacts-mode .contacts-empty p{max-width:230px!important;margin-top:6px!important;color:#aaa0c8!important;font-size:12px!important;line-height:1.45!important}
+body.contacts-mode .contacts-add-button{
+  width:54px!important;height:54px!important;right:18px!important;
+  bottom:94px!important;border:1px solid rgba(255,255,255,.25)!important;
+  border-radius:50%!important;background:linear-gradient(145deg,#9a65ff,#5a25e8)!important;
+  color:#fff!important;font-size:29px!important;box-shadow:0 7px 22px #612dff66!important;
+}
+body.contacts-mode .people-result{
+  color:#f8f5ff!important;background:transparent!important;
+}
+body.contacts-mode .people-result-copy strong{color:#fff!important}
+body.contacts-mode .people-result-copy small{color:#aaa0c8!important}
+@media(max-width:430px){
+  body.contacts-mode .contacts-page{padding-left:13px!important;padding-right:13px!important}
+  body.contacts-mode .contacts-heading{height:56px!important}
+  body.contacts-mode .contacts-shortcuts{border-radius:17px!important}
+  body.contacts-mode .contact-shortcut{height:54px!important}
+}
