@@ -667,14 +667,58 @@ if(authForm){
 }
 $("settings-search").addEventListener("click",()=>{showScreen("chats-screen");$("search").focus();});
 $("settings-more").addEventListener("click",()=>alert("Дополнительные настройки ReLooop появятся позже."));
+const settingsPages={
+chats:["Настройки чатов","Оформи переписки под себя.",[["select","chat-theme","Тема",["Тёмная","Светлая","Системная"]],["toggle","chat-enter","Отправлять сообщение клавишей Enter"],["toggle","chat-preview","Предпросмотр ссылок"],["toggle","chat-animations","Анимации"]]],
+privacy:["Конфиденциальность","Эти предпочтения пока сохраняются на устройстве и не меняют серверную видимость профиля.",[["select","privacy-last-seen","Время посещения",["Все","Мои контакты","Никто"]],["select","privacy-photo","Фото профиля",["Все","Мои контакты","Никто"]],["toggle","privacy-read","Уведомления о прочтении"],["toggle","privacy-online","Показывать статус «В сети»"]]],
+notifications:["Уведомления","Настройки предпочтений. Push-уведомления пока не подключены.",[["toggle","notify-messages","Сообщения",1],["toggle","notify-groups","Группы",1],["toggle","notify-sound","Звук",1],["toggle","notify-vibration","Вибрация",1],["toggle","notify-preview","Текст сообщения",1]]],
+storage:["Данные и память","Управление загрузками и локальными настройками.",[["select","media-download","Автозагрузка медиа",["Только Wi-Fi","Всегда","Никогда"]],["toggle","media-save","Сохранять изображения"],["action","clear-local","Очистить локальные настройки"]]],
+folders:["Папки с чатами","Создавай папки для сортировки переписок. Пока они сохраняются на этом устройстве.",[["action","add-folder","＋ Создать папку"],["folders","list","Мои папки"]]],
+devices:["Устройства","В этой версии доступен просмотр только текущего сеанса. Управление другими сеансами требует серверной функции.",[["info","Текущее устройство: браузер на этом устройстве"],["action","refresh-session","Обновить сведения"]]],
+battery:["Энергосбережение","Уменьши визуальные эффекты интерфейса.",[["toggle","battery-mode","Режим энергосбережения"],["toggle","battery-animations","Отключить анимации"]]],
+language:["Язык","Сейчас интерфейс полностью доступен на русском языке.",[["info","Доступен язык: Русский"],["info","Другие языки появятся позже."]]],
+business:["ReLooop для бизнеса","Инструменты для команд и проектов пока в разработке.",[["info","Планируются командные чаты, роли участников и рабочие пространства."]]],
+"ask-help":["Задать вопрос","Встроенная поддержка ещё готовится.",[["info","Канал поддержки появится в будущей версии ReLooop."]]],
+faq:["Вопросы о ReLooop","Ответы на частые вопросы.",[["info","Как создать аккаунт? Зарегистрируйся через электронную почту."],["info","Как начать чат? Нажми «Новый чат» и введи имя пользователя."],["info","Где изменить имя? В настройках профиля."],["info","Работают ли звонки и платежи? Пока нет, они ещё не подключены."]]],
+features:["Возможности ReLooop","Что доступно сейчас.",[["info","Аккаунты и вход через Supabase"],["info","Профиль с отдельным именем и @именем"],["info","Личные переписки и поиск пользователей"],["info","Коллекция подарков"],["info","Локальные настройки интерфейса"]]],
+"privacy-policy":["Политика конфиденциальности","Краткая информация о текущей версии; полноценный юридический документ ещё готовится.",[["info","Для входа используется Supabase Auth."],["info","Профили и сообщения хранятся в базе данных Supabase проекта."],["info","Не отправляй в чатах пароли и коды подтверждения."],["info","Подробные правила хранения и удаления данных будут опубликованы отдельно."]]]
+};
+function prefGet(k,d="false"){try{return localStorage.getItem("relooop-setting-"+k)??d}catch{return d}}
+function prefSet(k,v){try{localStorage.setItem("relooop-setting-"+k,String(v))}catch{alert("Не удалось сохранить настройку на устройстве.")}}
+function settingsItem(item){
+const [type,key,label,options]=item;
+if(type==="toggle"){const on=prefGet(key,(key==="chat-preview"||key==="chat-animations"||key==="notify-messages"||key==="notify-sound"||key==="notify-vibration"||key==="notify-preview"||key==="privacy-read"||key==="privacy-online")?"true":"false")==="true";return '<label class="settings-detail-toggle"><span>'+escapeHTML(label)+'</span><input type="checkbox" data-pref="'+key+'" '+(on?"checked":"")+'></label>'}
+if(type==="select"){const current=prefGet(key,options[0]);return '<label class="settings-detail-select"><span>'+escapeHTML(label)+'</span><select data-pref="'+key+'">'+options.map(v=>'<option '+(v===current?"selected":"")+'>'+escapeHTML(v)+'</option>').join("")+'</select></label>'}
+if(type==="action")return '<button type="button" class="settings-detail-action" data-settings-action="'+key+'">'+escapeHTML(label)+'</button>';
+if(type==="folders"){let list=[];try{list=JSON.parse(prefGet("folders","[]"))}catch{}return '<div class="settings-folder-list">'+(list.length?list.map((v,i)=>'<div class="settings-folder-item">'+escapeHTML(v)+'<button data-remove-folder="'+i+'" type="button">×</button></div>').join(""):'<p class="settings-detail-muted">Папок пока нет.</p>')+'</div>'}
+return '<p class="settings-detail-info">'+escapeHTML(type==="info"?key:label)+'</p>';
+}
+function closeSettingsDetail(){const p=$("settings-detail");if(p)p.remove();document.querySelectorAll(".settings-page > [data-settings-hidden]").forEach(el=>{el.hidden=false;el.removeAttribute("data-settings-hidden")})}
+function openSettingsDetail(key){
+const data=settingsPages[key];if(!data)return;
+closeSettingsDetail();
+const page=document.querySelector(".settings-page");
+page.querySelectorAll(":scope > .settings-topline,:scope > .settings-profile,:scope > .settings-list,:scope > .settings-help-title,:scope > .settings-account-footer").forEach(el=>{el.hidden=true;el.dataset.settingsHidden="1"});
+const panel=document.createElement("section");panel.id="settings-detail";panel.className="settings-detail";
+panel.innerHTML='<header class="settings-detail-header"><button type="button" id="settings-detail-back">‹</button><h2>'+escapeHTML(data[0])+'</h2></header><p class="settings-detail-description">'+escapeHTML(data[1])+'</p><div class="settings-detail-card">'+data[2].map(settingsItem).join("")+'</div>';
+page.appendChild(panel);
+$("settings-detail-back").onclick=closeSettingsDetail;
+panel.addEventListener("change",e=>{const el=e.target;if(el.matches("[data-pref]")){prefSet(el.dataset.pref,el.type==="checkbox"?el.checked:el.value);if(el.dataset.pref.startsWith("battery-"))document.body.classList.toggle("relooop-low-motion",prefGet("battery-mode")==="true"||prefGet("battery-animations")==="true")}});
+panel.addEventListener("click",e=>{
+const a=e.target.closest("[data-settings-action]");
+if(a?.dataset.settingsAction==="add-folder"){const name=prompt("Название папки:");if(name?.trim()){let f=JSON.parse(prefGet("folders","[]"));if(f.some(x=>x.toLowerCase()===name.trim().toLowerCase())){alert("Такая папка уже есть.");return}f.push(name.trim().slice(0,24));prefSet("folders",JSON.stringify(f));openSettingsDetail("folders")}}
+if(a?.dataset.settingsAction==="clear-local"&&confirm("Очистить только настройки ReLooop на этом устройстве? Аккаунт и сообщения останутся.")){Object.keys(localStorage).filter(k=>k.startsWith("relooop-setting-")).forEach(k=>localStorage.removeItem(k));alert("Настройки очищены.");openSettingsDetail("storage")}
+if(a?.dataset.settingsAction==="refresh-session"){const p=panel.querySelector(".settings-detail-info");if(p)p.textContent="Сеанс активен · "+new Date().toLocaleString("ru-RU")}
+const rm=e.target.closest("[data-remove-folder]");if(rm){let f=JSON.parse(prefGet("folders","[]"));f.splice(Number(rm.dataset.removeFolder),1);prefSet("folders",JSON.stringify(f));openSettingsDetail("folders")}
+});
+}
 document.querySelectorAll("[data-setting]").forEach(row=>row.addEventListener("click",()=>{
-  const key=row.dataset.setting;
-  if(key==="display-name"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("display-name-input").focus();return;}
-  if(key==="username"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("username-input").focus();return;}
-  if(key==="premium"){openPremium();return;}
-  if(key==="stars"){openStars();return;}
-  const messages={chats:"Настройки оформления чатов скоро появятся.",privacy:"Настройки конфиденциальности скоро появятся.",notifications:"Настройки уведомлений скоро появятся.",storage:"Управление памятью скоро появится.",folders:"Папки чатов скоро появятся.",devices:"Управление устройствами скоро появится.",battery:"Энергосбережение скоро появится.",language:"Сейчас доступен русский язык.",premium:"ReLooop Premium пока в разработке. Платные функции ещё не подключены.",business:"Раздел для бизнеса находится в разработке.", "send-gift":"Открой вкладку «Профиль» → «Подарки», чтобы посмотреть свою коллекцию. Отправка подарков друзьям появится позже.", "ask-help":"Поддержка ReLooop пока готовится. Напиши нам позже через этот раздел.",faq:"ReLooop — мессенджер в разработке. Сейчас доступны регистрация, профиль и базовые чаты.",features:"В ReLooop уже есть аккаунты, профили, чаты и коллекция подарков. Остальные возможности добавляются постепенно.", "privacy-policy":"Мы используем Supabase для входа и хранения данных аккаунта и сообщений. Полная политика конфиденциальности ещё готовится."};
-  alert(messages[key]||"Этот раздел скоро появится.");
+const key=row.dataset.setting;
+if(key==="display-name"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("display-name-input").focus();return}
+if(key==="username"){showScreen("profile-screen");$("profile-edit-panel").hidden=false;$("username-input").focus();return}
+if(key==="premium"){openPremium();return}
+if(key==="stars"){openStars();return}
+if(key==="send-gift"){showScreen("profile-screen");document.querySelector('[data-profile-tab="gifts"]').click();return}
+openSettingsDetail(key);
 }));
 
 $("contacts-search-input").addEventListener("input",searchPeople);
