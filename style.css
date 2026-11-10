@@ -687,3 +687,16 @@ body.profile-mode .bottom-nav{height:54px!important;bottom:5px!important;width:c
 body.profile-mode .nav-button{min-width:0;border:0!important;border-radius:18px!important;color:#a99fc3!important;font-size:10px!important;gap:0!important;padding:2px!important}
 body.profile-mode .nav-button span{font-size:18px!important;line-height:20px}
 body.profile-mode .nav-button.active{color:#fff!important;background:linear-gradient(145deg,rgba(130,75,255,.92),rgba(79,34,194,.92))!important;box-shadow:0 5px 18px #652dff55,inset 0 1px 0 #ffffff35!important;margin:2px!important}
+
+body.settings-mode .settings-detail{color:#f8f5ff}
+body.settings-mode .settings-detail-header button{background:rgba(31,25,57,.85);border:1px solid rgba(190,165,255,.2);color:#e9ddff}
+body.settings-mode .settings-detail-header h2{color:#fff;font-size:19px}
+body.settings-mode .settings-detail-description{color:#b8acce;font-size:12px}
+body.settings-mode .settings-detail-card{background:rgba(31,25,57,.78);border:1px solid rgba(190,165,255,.17);box-shadow:inset 0 1px 0 #ffffff0d;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+body.settings-mode .settings-detail-toggle,body.settings-mode .settings-detail-select{color:#f8f5ff;border-color:rgba(190,165,255,.12);font-size:12px}
+body.settings-mode .settings-detail-select select{background:#17112b;border-color:#49376c;color:#f8f5ff;font-size:12px}
+body.settings-mode .settings-detail-action{background:rgba(130,75,255,.2);color:#d8c4ff;border:1px solid rgba(190,165,255,.18);font-size:12px}
+body.settings-mode .settings-detail-info{color:#c9bddf;border-color:rgba(190,165,255,.12);font-size:12px}
+body.settings-mode .settings-folder-item{color:#eee5ff;border-color:rgba(190,165,255,.12);font-size:12px}
+body.settings-mode .settings-folder-item button{background:rgba(220,70,100,.15);color:#ff9aaa}
+body.settings-mode .settings-detail-muted{color:#aaa0c8;font-size:12px}
