@@ -1,0 +1,66 @@
+/* ReLooop — classic Telegram-inspired interface (original branding/assets) */
+:root{--tg-blue:#229ed9;--tg-blue-dark:#168ac2;--tg-bg:#fff;--tg-panel:#fff;--tg-text:#17212b;--tg-muted:#707579;--tg-line:#e6e9ec;--tg-soft:#f1f3f5}
+html,body{background:var(--tg-bg)!important;color:var(--tg-text)!important}
+body,body.chats-mode,body.profile-mode,body.settings-mode,body.contacts-mode{background:var(--tg-bg)!important;color:var(--tg-text)!important}
+body .app-shell,body.chats-mode .app-shell,body.profile-mode .app-shell,body.settings-mode .app-shell,body.contacts-mode .app-shell{background:var(--tg-bg)!important;color:var(--tg-text)!important}
+.topbar{background:var(--tg-blue)!important;color:#fff!important;box-shadow:none!important}
+.topbar h1,.topbar p,.topbar .brand-copy{color:#fff!important}
+.brand-mark,.chats-brand-icon,.profile-mini-logo,.settings-mini-logo{background:var(--tg-blue)!important;color:#fff!important;box-shadow:none!important}
+.screen{background:var(--tg-bg)!important}
+.chats-page,.contacts-page,.profile-page,.settings-page{background:var(--tg-bg)!important;color:var(--tg-text)!important}
+.chats-heading,.contacts-heading{background:var(--tg-bg)!important;color:var(--tg-text)!important}
+.chats-heading h2,.contacts-heading h2,.profile-hero h2,.settings-profile h2{color:var(--tg-text)!important}
+.chats-heading .chats-brand-icon{width:38px!important;height:38px!important;flex:0 0 38px!important;border-radius:50%!important;font-size:19px!important;background:var(--tg-blue)!important}
+.chats-heading h2{font-size:21px!important;letter-spacing:0!important}
+.chats-search,.contacts-search{width:100%!important;height:42px!important;margin:8px 0 12px!important;padding:0 13px!important;border:0!important;border-radius:12px!important;background:#f1f3f5!important;box-shadow:none!important}
+.chats-search span,.contacts-search span{color:#707579!important}
+.chats-search input,.contacts-search input{width:100%!important;opacity:1!important;color:var(--tg-text)!important}
+.chats-search input::placeholder,.contacts-search input::placeholder{color:#8a9298!important}
+.chat-tabs{height:42px!important;margin:0 0 7px!important;padding:0!important;border:0!important;border-bottom:1px solid var(--tg-line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.chat-tab{height:42px!important;border-radius:0!important;color:#707579!important;font-size:14px!important}
+.chat-tab.active{background:transparent!important;color:var(--tg-blue)!important;box-shadow:inset 0 -2px var(--tg-blue)!important}
+.chat-tab span{background:#e5f4fb!important;color:var(--tg-blue)!important}
+.chat-list{gap:0!important;padding:0 0 88px!important}
+.chat-row{min-height:72px!important;padding:9px 13px!important;gap:11px!important;border:0!important;border-bottom:1px solid #f0f1f2!important;border-radius:0!important;background:#fff!important;color:var(--tg-text)!important;box-shadow:none!important;backdrop-filter:none!important}
+.chat-row:active{background:#f1f3f5!important}
+.chat-row .avatar{width:52px!important;height:52px!important;flex:0 0 52px!important;font-size:19px!important;border:0!important;box-shadow:none!important}
+.chat-name{font-size:15px!important;font-weight:600!important;color:#17212b!important}
+.chat-time{font-size:11px!important;color:#8a9298!important}
+.chat-preview{font-size:13px!important;color:#707579!important;margin-top:3px!important}
+.chats-fab{width:54px!important;height:54px!important;right:18px!important;bottom:88px!important;border-radius:50%!important;background:var(--tg-blue)!important;color:#fff!important;font-size:27px!important;box-shadow:0 3px 12px #0002!important;border:0!important}
+.bottom-nav{height:60px!important;bottom:0!important;width:100%!important;max-width:none!important;padding:4px 8px calc(4px + env(safe-area-inset-bottom))!important;border:0!important;border-top:1px solid var(--tg-line)!important;border-radius:0!important;background:#fff!important;box-shadow:0 -2px 8px #00000008!important;backdrop-filter:none!important}
+.nav-button{border:0!important;border-radius:8px!important;color:#707579!important;font-size:10px!important;gap:2px!important}
+.nav-button span{font-size:20px!important}
+.nav-button.active{color:var(--tg-blue)!important;background:transparent!important;box-shadow:none!important}
+body.settings-mode .settings-page,body.profile-mode .profile-page{max-width:650px!important;padding:0 14px 80px!important}
+body.settings-mode .settings-topline,body.profile-mode .profile-topline{height:48px!important}
+body.settings-mode .settings-mini-logo,body.profile-mode .profile-mini-logo{color:var(--tg-blue)!important;background:transparent!important}
+body.settings-mode .settings-profile,body.profile-mode .profile-hero{padding:12px 0 18px!important}
+body.settings-mode .settings-avatar,body.profile-mode .profile-photo{border:0!important;box-shadow:none!important}
+body.settings-mode .settings-profile h2,body.profile-mode .profile-hero h2{color:var(--tg-text)!important}
+body.settings-mode .settings-profile p,body.profile-mode .profile-username-handle,body.profile-mode .profile-online{color:var(--tg-muted)!important}
+body.settings-mode .settings-list,body.profile-mode .profile-details,body.profile-mode .profile-tabs,body.profile-mode .profile-edit-panel{border:0!important;border-radius:0!important;background:#fff!important;box-shadow:none!important;backdrop-filter:none!important}
+body.settings-mode .settings-row{min-height:60px!important;border-bottom:1px solid var(--tg-line)!important;background:#fff!important;color:var(--tg-text)!important}
+body.settings-mode .settings-row strong,body.profile-mode .profile-detail strong{color:var(--tg-text)!important}
+body.settings-mode .settings-row small,body.profile-mode .profile-detail span{color:var(--tg-muted)!important}
+body.settings-mode .settings-icon{border-radius:9px!important}
+body.settings-mode .settings-extra-list{margin-top:12px!important}
+body.settings-mode .settings-help-title{color:var(--tg-muted)!important}
+body.settings-mode .settings-account-footer{color:var(--tg-muted)!important}
+body.profile-mode .profile-action{border:1px solid var(--tg-line)!important;border-radius:12px!important;background:#fff!important;color:var(--tg-text)!important;box-shadow:none!important}
+body.profile-mode .profile-action span{color:var(--tg-blue)!important}
+body.profile-mode .profile-tabs{border-bottom:1px solid var(--tg-line)!important}
+body.profile-mode .profile-tab{color:var(--tg-muted)!important}
+body.profile-mode .profile-tab.active{background:transparent!important;color:var(--tg-blue)!important;border-bottom:2px solid var(--tg-blue)!important}
+body.contacts-mode .contacts-heading h2{color:var(--tg-text)!important}
+.contacts-shortcuts,.contacts-list-card{background:#fff!important;border-color:var(--tg-line)!important;box-shadow:none!important}
+.contact-shortcut{color:var(--tg-text)!important;border-color:var(--tg-line)!important}
+.conversation{background:#e7ebef!important}
+.conversation-header{background:var(--tg-blue)!important;color:#fff!important}
+.message-bubble{border-radius:14px 14px 14px 4px!important;box-shadow:0 1px 1px #0001!important}
+.message-bubble.mine{border-radius:14px 14px 4px 14px!important;background:#d9fdd3!important;color:#17212b!important}
+#message-form{background:#fff!important;border-top:1px solid var(--tg-line)!important}
+#message-input{background:#f1f3f5!important;color:var(--tg-text)!important}
+#message-form button{background:var(--tg-blue)!important;color:#fff!important}
+@media(max-width:430px){.bottom-nav{height:58px!important}.chat-row{min-height:70px!important}.chat-row .avatar{width:50px!important;height:50px!important;flex-basis:50px!important}}
+@media(prefers-color-scheme:dark){/* Keep the classic Telegram light appearance consistent across devices. */}
